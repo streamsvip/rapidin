@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Credenciales y entornos (nunca subir)
+.env
+.env.*
+*.pem
+*serviceAccount*.json
+*-firebase-adminsdk-*.json
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+database-debug.log*
+pubsub-debug.log*
+
+# Flutter / Dart (apps futuras)
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
