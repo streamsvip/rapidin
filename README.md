@@ -9,7 +9,7 @@ RAPIDIN es una plataforma de delivery por ofertas para Camaná, Arequipa (Perú)
 | Componente | Carpeta | Estado |
 |---|---|---|
 | Web pública | `web/` | Lista (demostración, sin backend) |
-| Panel de cliente | `web/` (`#cliente`) | Listo en modo demostración |
+| Panel de cliente y Market | `web/` (`#cliente`) | Listo en modo demostración |
 | Panel de repartidor y postulación | `web/` (`#repartidor`) | Listo en modo demostración |
 | Panel administrativo | `web/` (`#admin`) | Listo en modo demostración. En producción será un sitio aparte |
 | Backend Firebase (Functions, reglas) | `firebase/` | Pendiente |
@@ -26,12 +26,20 @@ Contraseña de todas: **`Rapidin123`**. En la ventana «Ingresar» hay botones p
 
 | Rol | Correo | Qué puedes probar |
 |---|---|---|
-| Cliente | `cliente@rapidin.test` | Pedir, comparar y aceptar ofertas, pagar, seguir en el mapa, calificar, billetera |
+| Cliente | `cliente@rapidin.test` | Comprar en el Market, pedido libre, aceptar ofertas, pagar, seguir en el mapa, calificar, billetera, direcciones |
 | Repartidor | `repartidor@rapidin.test` | Estar disponible, ofertar, avanzar estados, confirmar pagos, billetera y retiros |
 | Postulante | `postulante@rapidin.test` | Ver el estado de una postulación pendiente |
-| Administrador | `admin@rapidin.test` | Aprobar repartidores, verificar recargas, pagar retiros, comisiones, configuración, auditoría |
+| Administrador | `admin@rapidin.test` | Locales, horarios y catálogo del Market, aprobar repartidores, recargas, retiros, comisiones, configuración, auditoría |
 
 También puedes **crear una cuenta nueva**: el código de verificación del SMS aparece en pantalla.
+
+### Market
+
+- El administrador registra cada local con sus **días y horario de atención** (hora de Lima) y activa «Vende en el Market».
+- En **Establecimientos → Catálogo** carga los productos con el **precio del local**, sección, descripción y foto opcional, y puede marcarlos como agotados.
+- El cliente solo puede comprar cuando el local está **abierto**. Arma su carrito (un local por pedido), elige dirección y medio de pago y confirma.
+- Los repartidores ven los productos y el precio del local **fijo**; solo ofertan su **tarifa de envío**. El cliente compara y elige.
+- Los precios se toman siempre del catálogo en el servidor, nunca de lo que envía el navegador.
 
 ### Actividad simulada
 
@@ -54,7 +62,8 @@ web/
 ├── js/scene3d.js         Escena 3D del inicio (Three.js r128)
 ├── js/app.js             Aplicación: rutas (#cliente, #repartidor, #admin), sesión, barra lateral
 ├── js/auth.js            Ingreso, registro y verificación del celular
-├── js/map.js             Mapa referencial de Camaná (se reemplaza por Google Maps)
+├── js/config.js          Configuración pública: API key de Google Maps, Map ID, zona
+├── js/map.js             Mapas: Google Maps si hay API key; si no, mapa referencial
 ├── js/ui.js              Utilidades de interfaz
 ├── js/panels/            cliente.js, repartidor.js, admin.js, common.js
 ├── js/demo/store.js      Datos de demostración (se reemplaza por Firestore)
@@ -70,6 +79,25 @@ Los paneles solo hablan con `demo/api.js` y `demo/store.js`. Para conectar Fireb
 - Firestore con las mismas colecciones (`users`, `couriers`, `orders`, `wallets`, `walletLedger`, `topups`, `withdrawals`, `commissionRules`, `config`, `establishments`, `zones`, `auditLog`…).
 - Cloud Functions con los mismos nombres (`createOrder`, `submitOffer`, `acceptOffer`, `advanceOrderState`, `confirmTopup`…).
 - Google Maps en lugar del mapa referencial.
+
+## Conectar Google Maps
+
+La web ya está preparada: si `web/js/config.js` tiene una API key, usa Google Maps; si está vacía o la key falla, usa el mapa referencial.
+
+1. En [Google Cloud Console](https://console.cloud.google.com/), usa el mismo proyecto de Firebase (`rapidin-dev`) con la facturación activa.
+2. **APIs y servicios → Biblioteca**, habilita:
+   - **Maps JavaScript API** (web).
+   - **Maps SDK for Android** y **Maps SDK for iOS** (cuando hagamos las apps).
+   - **Places API (New)** (más adelante, para buscar direcciones escribiendo).
+   - **Routes API** (solo la usarán las Cloud Functions para calcular la ruta una vez por pedido).
+3. **APIs y servicios → Credenciales → Crear credenciales → Clave de API**. Edítala:
+   - **Restricción de aplicación: Sitios web**, agrega `https://streamsvip.github.io/*` y `http://localhost:*/*` (luego tu dominio).
+   - **Restricción de API:** solo *Maps JavaScript API* (y *Places API (New)* cuando la usemos).
+4. **Google Maps Platform → Administración de mapas → Crear ID de mapa** (tipo JavaScript, vectorial). En **Estilos de mapa** crea un estilo con los colores de RAPIDIN y asócialo a ese ID.
+5. **Cuotas:** en *Maps JavaScript API → Cuotas*, pon un límite diario de cargas de mapa (por ejemplo 300 al día) para no salir del uso gratuito mientras pruebas.
+6. Pega la key y el Map ID en `web/js/config.js`, sube el cambio a GitHub y listo.
+
+Las vistas reutilizan cada mapa mientras está abierto para no cobrar una carga nueva cada vez que se mueve el repartidor. La vista previa de Claude no puede cargar Google Maps (bloquea scripts externos); pruébalo en GitHub Pages o en tu PC.
 
 ## Ver la web en tu computador
 
