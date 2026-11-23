@@ -27,7 +27,7 @@ Contraseña de todas: **`Rapidin123`**. En la ventana «Ingresar» hay botones p
 | Rol | Correo | Qué puedes probar |
 |---|---|---|
 | Cliente | `cliente@rapidin.test` | Comprar en el Market, pedido libre, aceptar ofertas, pagar, seguir en el mapa, calificar, billetera, direcciones |
-| Repartidor | `repartidor@rapidin.test` | Estar disponible, ofertar, avanzar estados, confirmar pagos, billetera y retiros |
+| Repartidor | `repartidor@rapidin.test` | Estar disponible, Guía de precios, ofertar, avanzar estados, confirmar pagos, billetera y retiros |
 | Postulante | `postulante@rapidin.test` | Ver el estado de una postulación pendiente |
 | Administrador | `admin@rapidin.test` | Locales, horarios y catálogo del Market, aprobar repartidores, recargas, retiros, comisiones, configuración, auditoría |
 
@@ -40,6 +40,14 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 - El cliente solo puede comprar cuando el local está **abierto**. Arma su carrito (un local por pedido), elige dirección y medio de pago y confirma.
 - Los repartidores ven los productos y el precio del local **fijo**; solo ofertan su **tarifa de envío**. El cliente compara y elige.
 - Los precios se toman siempre del catálogo en el servidor, nunca de lo que envía el navegador.
+
+### Guía de precios para repartidores
+
+Es distinta del Market y el cliente no la ve. Sirve para cotizar pedidos de **compra libre**:
+- El administrador agrega locales en **Guía repartidor** con su teléfono, días y horario, si aceptan pedidos por teléfono y notas, y carga **precios de referencia** por producto. Puede marcar todos los precios como «revisados hoy» después de llamar al local.
+- El repartidor busca un producto (por ejemplo «gaseosa 3 L») y ve dónde está más barato, si el local está abierto y su teléfono para pedir y pasar a recoger.
+- Al ofertar en una compra libre, la calculadora sugiere productos según lo que pidió el cliente y suma el costo automáticamente.
+- En sus entregas de tienda o Market, el repartidor ve el teléfono del local para pedir antes de llegar.
 
 ### Actividad simulada
 
@@ -69,7 +77,7 @@ web/
 ├── js/demo/store.js      Datos de demostración (se reemplaza por Firestore)
 ├── js/demo/api.js        Reglas de negocio (se reemplazan por Cloud Functions)
 ├── js/demo/sim.js        Actividad simulada (solo demo)
-└── assets/rap.png        Logo
+└── assets/               Logos (ver «Logos»)
 ```
 
 ### Paso a Firebase
@@ -98,6 +106,20 @@ La web ya está preparada: si `web/js/config.js` tiene una API key, usa Google M
 6. Pega la key y el Map ID en `web/js/config.js`, sube el cambio a GitHub y listo.
 
 Las vistas reutilizan cada mapa mientras está abierto para no cobrar una carga nueva cada vez que se mueve el repartidor. La vista previa de Claude no puede cargar Google Maps (bloquea scripts externos); pruébalo en GitHub Pages o en tu PC.
+
+## Logos
+
+Copia en `web/assets/` (imágenes cuadradas de 128 × 128 px o más):
+
+| Archivo | Uso |
+|---|---|
+| `rap.png` | Logo de RAPIDIN |
+| `yape.png` | Medio de pago Yape |
+| `plin.png` | Medio de pago Plin |
+| `lemon.png` | Medio de pago Lemon |
+| `wallet.png` | Saldo RAPIDIN |
+
+Si falta alguno, la web muestra una insignia de color con la inicial.
 
 ## Ver la web en tu computador
 
