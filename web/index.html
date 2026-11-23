@@ -33,6 +33,7 @@
     <nav class="nav-links" id="navLinks" aria-label="Principal">
       <a href="#como">Cómo funciona</a>
       <a href="#modalidades">Modalidades</a>
+      <a href="#market">Market</a>
       <a href="#categorias">Categorías</a>
       <a href="#repartidores">Repartidores</a>
       <a href="#faq">Preguntas</a>
@@ -123,11 +124,22 @@
 <section class="modes" id="modalidades">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Dos formas de pedir</span>
-      <h2>Dinos qué necesitas o dinos dónde comprarlo.</h2>
-      <p class="lead">Las dos modalidades usan el mismo sistema de ofertas. Cambia solo quién decide el lugar de compra.</p>
+      <span class="eyebrow">Tres formas de pedir</span>
+      <h2>Compra en el Market, dinos dónde comprar o solo qué necesitas.</h2>
+      <p class="lead">Las tres usan el mismo sistema: los repartidores te ofertan y tú eliges.</p>
     </div>
     <div class="mode-grid">
+      <article class="mode market">
+        <svg class="mode-glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M4 10v10h16V10M3 10l2-6h14l2 6H3Z"/><path d="M9 20v-5h6v5"/></svg>
+        <span class="tag">Market</span>
+        <h3>Compra en los locales de Camaná</h3>
+        <p>Eliges productos del catálogo de cada local, con su precio real. Los repartidores solo ofertan el envío.</p>
+        <ul>
+          <li><svg><use href="#i-check"/></svg>Precios fijados por el propio local.</li>
+          <li><svg><use href="#i-check"/></svg>Solo pides cuando el local está abierto.</li>
+          <li><svg><use href="#i-check"/></svg>Comparas ofertas de envío y eliges.</li>
+        </ul>
+      </article>
       <article class="mode libre">
         <svg class="mode-glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 9h18l-2 10H5L3 9Z"/><path d="M8 9l4-5 4 5"/></svg>
         <span class="tag">Compra libre</span>
@@ -151,6 +163,18 @@
         </ul>
       </article>
     </div>
+  </div>
+</section>
+
+<section id="market" class="lm-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Market RAPIDIN</span>
+      <h2>Los locales de Camaná, en tu celular.</h2>
+      <p class="lead">Mira quién está abierto ahora, arma tu pedido con los precios del local y recibe ofertas de envío.</p>
+    </div>
+    <div class="lm-grid" id="mkGrid"></div>
+    <div style="margin-top:26px"><button class="btn" type="button" data-open="dlgOrder">Ver todo el Market <svg><use href="#i-arrow"/></svg></button></div>
   </div>
 </section>
 
