@@ -19,20 +19,16 @@ RAPIDIN es una plataforma de delivery por ofertas para Camaná, Arequipa (Perú)
 
 ## Funciones
 
-Las reglas de negocio están en `web/js/core/api.js` (en la fase 2 pasan a Cloud Functions con los mismos nombres). Las cuentas de abajo existen solo en el modo de prueba local (ver «Modo de prueba local»), nunca en la web publicada.
+Las reglas de negocio están en `web/js/core/api.js` (en la fase 2 pasan a Cloud Functions con los mismos nombres).
 
-### Cuentas de prueba
+### Roles
 
-Contraseña de todas: **`Rapidin123`**. En la ventana «Ingresar» hay botones para entrar con un clic.
-
-| Rol | Correo | Qué puedes probar |
-|---|---|---|
-| Cliente | `cliente@rapidin.test` | Comprar en el Market, pedido libre, aceptar ofertas, pagar, seguir en el mapa, calificar, billetera, direcciones |
-| Repartidor | `repartidor@rapidin.test` | Estar disponible, Guía de precios, ofertar, avanzar estados, confirmar pagos, billetera y retiros |
-| Postulante | `postulante@rapidin.test` | Ver el estado de una postulación pendiente |
-| Administrador | `admin@rapidin.test` | Locales, horarios y catálogo del Market, aprobar repartidores, recargas, retiros, comisiones, configuración, auditoría |
-
-También puedes **crear una cuenta nueva**: el código de verificación del SMS aparece en pantalla.
+| Rol | Qué hace |
+|---|---|
+| Cliente | Compra en el Market, pedido libre, acepta ofertas, paga (efectivo, Yape, Plin, Lemon o Saldo RAPIDIN), sigue en el mapa, califica, billetera y direcciones |
+| Repartidor | Postula, se pone disponible, Guía de precios, oferta, avanza estados, confirma pagos, billetera, recargas y retiros |
+| Negocio | Recibe pedidos del Market, confirma pagos directos, menú, horario y cobros |
+| Administrador | Locales y catálogo, aprobaciones, recargas, retiros, comisiones, reportes, configuración y auditoría |
 
 ### Market
 
@@ -120,10 +116,6 @@ Es distinta del Market y el cliente no la ve. Sirve para cotizar pedidos de **co
 - El repartidor busca un producto (por ejemplo «gaseosa 3 L») y ve dónde está más barato, si el local está abierto y su teléfono para pedir y pasar a recoger.
 - Al ofertar en una compra libre, la calculadora sugiere productos según lo que pidió el cliente y suma el costo automáticamente.
 - En sus entregas de tienda o Market, el repartidor ve el teléfono del local para pedir antes de llegar.
-
-### Modo de prueba local
-
-La web publicada usa siempre Firebase (el modo de prueba solo funciona en `localhost`). Para probar en tu PC sin tocar los datos reales, abre la consola del navegador y ejecuta `localStorage.setItem("rapidin.pruebaLocal","1")`, luego recarga: vuelven las cuentas de prueba y los datos guardados en el navegador. Para salir: `localStorage.removeItem("rapidin.pruebaLocal")`.
 
 ## Estructura de la web
 
