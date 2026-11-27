@@ -8,17 +8,18 @@ RAPIDIN es una plataforma de delivery por ofertas para Camaná, Arequipa (Perú)
 
 | Componente | Carpeta | Estado |
 |---|---|---|
-| Web pública | `web/` | Lista (demostración, sin backend) |
-| Panel de cliente y Market | `web/` (`#cliente`) | Listo en modo demostración |
-| Panel de repartidor y postulación | `web/` (`#repartidor`) | Listo en modo demostración |
-| Panel administrativo | `web/` (`#admin`) | Listo en modo demostración. En producción será un sitio aparte |
-| Backend Firebase (Functions, reglas) | `firebase/` | Pendiente |
+| Web pública | `web/` | Lista, conectada a Firebase |
+| Panel de cliente y Market | `web/` (`#cliente`) | Listo, conectado a Firebase |
+| Panel de repartidor y postulación | `web/` (`#repartidor`) | Listo, conectado a Firebase |
+| Panel administrativo | `web/` (`#admin`) | Listo, conectado a Firebase |
+| Reglas de Firestore | `firestore.rules` | Listas (fase 1, plan Spark) |
+| Cloud Functions | — | Fase 2 (plan Blaze) |
 | App cliente «Rapidin Delivery» (Flutter) | `apps/rapidin_delivery/` | Pendiente |
 | App repartidor «Rapidin Repartidor» (Flutter) | `apps/rapidin_repartidor/` | Pendiente |
 
-## Modo demostración
+## Funciones
 
-Todo funciona **sin Firebase**: los datos se guardan en el navegador (localStorage) y las reglas de negocio se ejecutan en `web/js/demo/api.js`, con los mismos nombres que tendrán las Cloud Functions. No se envían SMS ni correos y no se suben archivos.
+Las reglas de negocio están en `web/js/core/api.js` (en la fase 2 pasan a Cloud Functions con los mismos nombres). Las cuentas de abajo existen solo en el modo de prueba local (ver «Modo de prueba local»), nunca en la web publicada.
 
 ### Cuentas de prueba
 
@@ -98,7 +99,7 @@ Siempre aparece «Confirmar en Google Maps ↗» para verificar el punto.
 
 ### Logo y portada
 
-Cada establecimiento puede tener **logo** (cuadrado, se recorta a 256 px) y **portada** (horizontal, 960 × 480 px). Se muestran en el Market del inicio, en el Market del cliente, en la página del local y en el panel. En la demo se guardan reducidas en el navegador; en producción se suben a Firebase Storage.
+Cada establecimiento puede tener **logo** (cuadrado, se recorta a 256 px) y **portada** (horizontal, 960 × 480 px). Se muestran en el Market del inicio, en el Market del cliente, en la página del local y en el panel. Hoy se guardan reducidas dentro del documento del local; en la fase 2 se suben a Firebase Storage.
 
 ### Guía de precios para repartidores
 
@@ -110,7 +111,7 @@ Es distinta del Market y el cliente no la ve. Sirve para cotizar pedidos de **co
 
 ### Modo de prueba local
 
-La web publicada usa Firebase. Para probar en tu PC sin tocar los datos reales, abre la consola del navegador y ejecuta `localStorage.setItem("rapidin.forceDemo","1")`, luego recarga: vuelven las cuentas de prueba y los datos guardados en el navegador. Para salir: `localStorage.removeItem("rapidin.forceDemo")`.
+La web publicada usa siempre Firebase (el modo de prueba solo funciona en `localhost`). Para probar en tu PC sin tocar los datos reales, abre la consola del navegador y ejecuta `localStorage.setItem("rapidin.pruebaLocal","1")`, luego recarga: vuelven las cuentas de prueba y los datos guardados en el navegador. Para salir: `localStorage.removeItem("rapidin.pruebaLocal")`.
 
 ## Estructura de la web
 
@@ -129,10 +130,9 @@ web/
 ├── js/business.js        Formulario público «Registra tu negocio» y aviso por WhatsApp
 ├── js/ui.js              Utilidades de interfaz
 ├── js/panels/            cliente.js, repartidor.js, admin.js, common.js
-├── js/demo/store.js      Elige el backend (Firebase o modo de prueba local) y los datos iniciales
-├── js/demo/fbstore.js    Conexión con Firebase Auth y Firestore en tiempo real
-├── js/demo/api.js        Reglas de negocio (fase 2: Cloud Functions)
-├── js/demo/sim.js        Actividad simulada (solo modo de prueba)
+├── js/core/store.js      Elige el backend (Firebase o modo de prueba local) y los datos iniciales
+├── js/core/fbstore.js    Conexión con Firebase Auth y Firestore en tiempo real
+├── js/core/api.js        Reglas de negocio (fase 2: Cloud Functions)
 └── assets/               Logos (ver «Logos»)
 ```
 
@@ -144,8 +144,9 @@ Puesta en marcha (una sola vez):
 1. **Authentication → Método de acceso:** habilita *Correo electrónico/contraseña*.
 2. **Authentication → Configuración → Dominios autorizados:** agrega `streamsvip.github.io`.
 3. **Firestore → Reglas:** pega el contenido de `firestore.rules` y pulsa **Publicar**. Repite cada vez que cambie ese archivo.
-4. **Firestore → Datos:** colección `admins`, documento con el UID del administrador (campo `nombre`).
+4. **Firestore Database → Datos → Iniciar colección** `admins`. ID del documento: el UID de tu cuenta (Authentication → Usuarios). Campo `nombre` (string). Sin este documento la cuenta no entra al panel de administrador.
 5. Entra a la web con la cuenta de administrador: en **Resumen** pulsa **Cargar datos iniciales** (comisiones, zonas, Puerto en Llamas y su carta).
+6. Si en ese navegador creaste locales con la versión de prueba anterior, el **Resumen** muestra «Locales guardados en este navegador» → **Guardar en Firestore**.
 
 Colecciones: `meta/app` (comisiones, zonas, configuración), `users`, `perfiles` (nombre y foto públicos), `couriers`, `establishments`, `products`, `orders`, `ledger`, `topups`, `withdrawals`, `courierApplications`, `businessApplications`, `proveedores`, `preciosRef`, `auditLog`, `notifications/{uid}/items`.
 
