@@ -24,335 +24,81 @@
   <symbol id="i-moto" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="16.5" r="3"/><circle cx="18.5" cy="16.5" r="3"/><path d="M8.5 16.5h5l3-6h-4M14 6h3l1.5 4.5M5.5 16.5l3-5h4"/></g></symbol>
 </svg>
 
-<header class="nav" id="nav">
-  <div class="wrap">
+<header class="nav shop-nav" id="nav">
+  <div class="wrap sn-row">
     <a class="logo" href="#inicio" aria-label="RAPIDIN, inicio">
       <img class="logo-img" src="assets/rap.png" alt="" width="40" height="40">
       <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" hidden><rect width="40" height="40" rx="12" fill="#FF5A1F"/><path d="M13 29V11h8.5a5.5 5.5 0 0 1 1.6 10.76L28 29h-5.2l-4.3-6.8H17.6V29Z" fill="#fff"/><path d="M4 15h6M2 20h7M4 25h6" stroke="#101C2C" stroke-width="2.4" stroke-linecap="round"/></svg>
       <span class="logo-word">RAPID<b>IN</b></span>
     </a>
-    <nav class="nav-links" id="navLinks" aria-label="Principal">
-      <a href="#como">Cómo funciona</a>
-      <a href="#modalidades">Modalidades</a>
-      <a href="#market">Market</a>
-      <a href="#categorias">Categorías</a>
-      <a href="#repartidores">Repartidores</a>
-      <a href="#negocios">Negocios</a>
-      <a href="#faq">Preguntas</a>
-    </nav>
+    <span class="sn-city" title="Por ahora solo entregamos dentro de Camaná"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><small>Entregamos en</small><b>Camaná</b></span></span>
+    <label class="sn-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><span class="sr-only">Buscar</span><input id="shopQ" type="search" placeholder="Busca pollo, alitas, un local o lo que necesites" autocomplete="off" enterkeyhint="search"></label>
     <div class="nav-actions">
       <button class="nav-login" type="button" id="navAccount" data-open="dlgLogin">Ingresar</button>
-      <button class="btn small" type="button" data-open="dlgOrder">Solicitar pedido</button>
+      <button class="sn-cart" type="button" id="navCart" aria-label="Mi pedido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.3 11.2a2 2 0 0 1-2 1.8H8.3a2 2 0 0 1-2-1.8L5 8Z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg><span class="sn-cart-t">Mi pedido</span><b id="navCartN" hidden>0</b></button>
       <button class="burger" type="button" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
         <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
       </button>
     </div>
+    <nav class="nav-links" id="navLinks" aria-label="Principal">
+      <a href="#inicio">Locales</a>
+      <a href="#como">Cómo funciona</a>
+      <a href="#repartidores">Trabaja con nosotros</a>
+      <a href="#negocios">Registra tu negocio</a>
+      <a href="#faq">Ayuda</a>
+    </nav>
   </div>
 </header>
 
 <main>
-<section class="hero" id="inicio" style="padding:0">
-  <div class="wrap hero-inner">
-    <div class="hero-copy">
-      <span class="city-chip"><i></i>Disponible solo en Camaná, Arequipa</span>
-      <h1><span>Tu pedido,</span><span class="mid">tu precio,</span><span>tu repartidor.</span></h1>
-      <p class="hero-sub">Publica lo que necesitas. Los repartidores de Camaná te envían sus ofertas con precio y tiempo, y tú eliges la que más te conviene.</p>
-      <div class="hero-ctas">
-        <button class="btn" type="button" data-open="dlgOrder">Solicitar pedido <svg><use href="#i-arrow"/></svg></button>
-        <button class="btn ghost" type="button" data-open="dlgCourier"><svg><use href="#i-moto"/></svg> Trabaja con RAPIDIN</button>
-      </div>
-      <button class="hero-biz" type="button" data-open="dlgBiz"><svg><use href="#i-store"/></svg><span><b>¿Tienes un negocio en Camaná?</b> Regístralo y vende con RAPIDIN</span><svg class="arr"><use href="#i-arrow"/></svg></button>
-      <div class="hero-pay"><span>Paga con <b>efectivo</b>, <b>Yape</b>, <b>Plin</b>, <b>Lemon</b> o <b>saldo</b></span></div>
-    </div>
-  </div>
-  <div class="stage" id="stage" aria-hidden="true"><div class="bubbles" id="bubbles"></div></div>
-  <aside class="hud" aria-label="Ejemplo del ciclo de un pedido">
-    <div class="hud-title"><span>Pedido en vivo</span><span>ejemplo</span></div>
-    <ol id="hudList">
-      <li data-k="0">Solicitud publicada <code>solicitado</code></li>
-      <li data-k="1">Ofertas recibidas <code>ofertas</code></li>
-      <li data-k="2">Oferta aceptada <code>aceptada</code></li>
-      <li data-k="3">En camino <code>en_camino</code></li>
-      <li data-k="4">Repartidor cerca <code>cerca</code></li>
-      <li data-k="5">Entregado <code>entregado</code></li>
-    </ol>
-  </aside>
-</section>
-
-<div class="strip" aria-label="Lo que garantiza RAPIDIN">
-  <div class="wrap strip-row">
-    <div><b>Ofertas con vencimiento</b><span>Comparas sin presión</span></div>
-    <div><b>Precio final antes de aceptar</b><span>Cambios solo con tu permiso</span></div>
-    <div><b>Seguimiento en vivo</b><span>Recogida, ruta y entrega</span></div>
-    <div><b>Repartidores verificados</b><span>Aprobación manual</span></div>
-  </div>
-</div>
-
-<section id="como">
+<section class="shop" id="inicio">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Cómo funciona</span>
-      <h2>Tú publicas. Ellos ofertan. Tú decides.</h2>
-      <p class="lead">En RAPIDIN no hay tarifa impuesta. Cada pedido recibe ofertas reales de repartidores cercanos y tú comparas antes de aceptar.</p>
+    <div class="shop-tiles">
+      <button type="button" class="tile t-food" data-go="locales">
+        <span class="tile-txt"><b>Restaurantes y locales</b><small>Pide del menú con el precio del local</small></span>
+        <span class="tile-art" aria-hidden="true">🍗<i>🍟</i><em>🥤</em></span>
+      </button>
+      <button type="button" class="tile t-libre" data-go="libre">
+        <span class="tile-txt"><b>Pide lo que quieras</b><small>Compras, encargos y mandados en Camaná</small></span>
+        <span class="tile-art" aria-hidden="true">🛵<i>🛍️</i><em>📦</em></span>
+      </button>
     </div>
-    <div class="steps">
-      <article class="step tilt">
-        <span class="num">01</span>
-        <h3>Publica tu solicitud</h3>
-        <p>Describe lo que necesitas, marca en el mapa dónde lo recibes y elige cómo pagarás.</p>
-        <span class="state">solicitado</span>
-      </article>
-      <article class="step tilt">
-        <span class="num">02</span>
-        <h3>Recibe ofertas</h3>
-        <p>Los repartidores disponibles en tu zona envían precio total, tiempo estimado y un mensaje.</p>
-        <span class="state">ofertas_recibidas</span>
-      </article>
-      <article class="step tilt">
-        <span class="num">03</span>
-        <h3>Elige la mejor</h3>
-        <p>Compara precio, tiempo, calificación y pedidos completados. Aceptas una y las demás se cierran.</p>
-        <span class="state">oferta_aceptada</span>
-      </article>
-      <article class="step tilt">
-        <span class="num">04</span>
-        <h3>Síguelo en vivo</h3>
-        <p>Ves al repartidor en el mapa, te avisamos cuando recoge tu pedido y cuando está cerca.</p>
-        <span class="state">camino_a_entrega</span>
-      </article>
-    </div>
+    <div class="hs shop-cats" id="shopCats"></div>
+    <div id="shopBody" aria-live="polite"></div>
   </div>
 </section>
 
-<section class="modes" id="modalidades">
+<section id="como" class="how">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Tres formas de pedir</span>
-      <h2>Compra en el Market, dinos dónde comprar o solo qué necesitas.</h2>
-      <p class="lead">Las tres usan el mismo sistema: los repartidores te ofertan y tú eliges.</p>
+    <h2 class="how-t">Así de fácil con RAPIDIN</h2>
+    <div class="how-grid">
+      <div class="how-i"><span>1</span><b>Elige o describe</b><p>Arma tu pedido en un local o escribe lo que necesitas.</p></div>
+      <div class="how-i"><span>2</span><b>Recibe ofertas</b><p>Los repartidores de Camaná te ofertan el envío con precio y tiempo.</p></div>
+      <div class="how-i"><span>3</span><b>Elige y síguelo</b><p>Aceptas la que te conviene y lo ves llegar en el mapa.</p></div>
     </div>
-    <div class="mode-grid">
-      <article class="mode market">
-        <svg class="mode-glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M4 10v10h16V10M3 10l2-6h14l2 6H3Z"/><path d="M9 20v-5h6v5"/></svg>
-        <span class="tag">Market</span>
-        <h3>Compra en los locales de Camaná</h3>
-        <p>Eliges productos del catálogo de cada local, con su precio real. Los repartidores solo ofertan el envío.</p>
-        <ul>
-          <li><svg><use href="#i-check"/></svg>Precios fijados por el propio local.</li>
-          <li><svg><use href="#i-check"/></svg>Solo pides cuando el local está abierto.</li>
-          <li><svg><use href="#i-check"/></svg>Comparas ofertas de envío y eliges.</li>
-        </ul>
-      </article>
-      <article class="mode libre">
-        <svg class="mode-glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 9h18l-2 10H5L3 9Z"/><path d="M8 9l4-5 4 5"/></svg>
-        <span class="tag">Compra libre</span>
-        <h3>Describe lo que necesitas</h3>
-        <p>No eliges tienda. El repartidor decide dónde comprar y te oferta un precio total.</p>
-        <ul>
-          <li><svg><use href="#i-check"/></svg>Sin tope de monto y sin adelanto.</li>
-          <li><svg><use href="#i-check"/></svg>Conoces el precio final antes de aceptar.</li>
-          <li><svg><use href="#i-check"/></svg>Si cambia un producto o el precio, el repartidor te pide autorización.</li>
-        </ul>
-      </article>
-      <article class="mode tienda">
-        <svg class="mode-glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path d="M4 10v10h16V10M3 10l2-6h14l2 6H3Z"/><path d="M9 20v-5h6v5"/></svg>
-        <span class="tag">Tienda específica</span>
-        <h3>Elige el establecimiento</h3>
-        <p>Seleccionas la tienda o escribes su dirección. El repartidor recibe la ubicación exacta.</p>
-        <ul>
-          <li><svg><use href="#i-check"/></svg>Ideal cuando ya sabes qué tienda prefieres.</li>
-          <li><svg><use href="#i-check"/></svg>Ruta clara: recogida en la tienda, entrega en tu puerta.</li>
-          <li><svg><use href="#i-check"/></svg>Sigue cada etapa: en tienda, recogido, en camino.</li>
-        </ul>
-      </article>
-    </div>
+    <p class="how-pay">Paga con <b>efectivo</b>, <b>Yape</b>, <b>Plin</b> o <b>Lemon</b>. Solo atendemos en <b>Camaná, Arequipa</b>.</p>
   </div>
 </section>
 
-<section id="market" class="lm-sec">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Market RAPIDIN</span>
-      <h2>Los locales de Camaná, en tu celular.</h2>
-      <p class="lead">Mira quién está abierto ahora, arma tu pedido con los precios del local y recibe ofertas de envío.</p>
-    </div>
-    <div class="lm-grid" id="mkGrid"></div>
-    <div style="margin-top:26px"><button class="btn" type="button" data-open="dlgOrder">Ver todo el Market <svg><use href="#i-arrow"/></svg></button></div>
+<section class="join" aria-label="Únete a RAPIDIN">
+  <div class="wrap join-grid">
+    <article class="join-c jc-courier" id="repartidores">
+      <span class="jc-ic" aria-hidden="true">🛵</span>
+      <h2>Trabaja con RAPIDIN</h2>
+      <p>Tú pones tu tarifa y eliges tus pedidos en Camaná. Cobras directo al cliente. Solo necesitas tu DNI y, si usas moto, tu licencia.</p>
+      <button class="btn" type="button" data-open="dlgCourier">Postular como repartidor <svg><use href="#i-arrow"/></svg></button>
+    </article>
+    <article class="join-c jc-biz" id="negocios">
+      <span class="jc-ic" aria-hidden="true">🏪</span>
+      <h2>Registra tu negocio</h2>
+      <p>Aparece con tu logo, tu portada y tus precios. Los repartidores de RAPIDIN recogen en tu local y entregan. Te escribimos por WhatsApp.</p>
+      <button class="btn teal" type="button" data-open="dlgBiz"><svg><use href="#i-store"/></svg> Registrar mi negocio</button>
+    </article>
   </div>
+  <div class="wrap"><p class="join-apps"><b>Apps para Android y iPhone muy pronto.</b> Mientras tanto, usa RAPIDIN desde esta web.</p></div>
 </section>
 
-<section id="categorias">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Categorías</span>
-      <h2>Mucho más que comida.</h2>
-      <p class="lead">Compras, encargos y entregas dentro de Camaná. Si es legal y cabe en una moto, se puede pedir.</p>
-    </div>
-    <div class="cats">
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M8 7c0-1.5 1-2 1-3M12 7c0-1.5 1-2 1-3M16 7c0-1.5 1-2 1-3"/></svg></div><div><b>Comida</b><span>Pollerías, menús, cevicherías, postres</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 9h18l-2 10H5L3 9Z"/><path d="M8 9l4-5 4 5"/></svg></div><div><b>Mercado</b><span>Frutas, abarrotes y compras del día</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg></div><div><b>Farmacia</b><span>Productos de venta libre e higiene</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7Z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div><div><b>Encargos</b><span>Recoge y lleva paquetes de un punto a otro</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg></div><div><b>Documentos</b><span>Trámites, sobres y copias</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M14.5 5.5a4 4 0 0 0 4.9 4.9L11 18.8a2 2 0 0 1-2.8-2.8l8.4-8.4"/><path d="M14.5 5.5l2.2-2.2 4 4-2.2 2.2"/></svg></div><div><b>Ferretería</b><span>Repuestos, herramientas y materiales</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1s6 1 6 1Zm0 0c2-4 6-4 6-1s-6 1-6 1Z"/></svg></div><div><b>Regalos</b><span>Flores, tortas y detalles sorpresa</span></div></div>
-      <div class="cat"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="7" cy="9" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="17" cy="9" r="2"/><path d="M8 17c0-3 2-5 4-5s4 2 4 5c0 2-2 2-4 2s-4 0-4-2Z"/></svg></div><div><b>Mascotas</b><span>Alimento, arena y accesorios</span></div></div>
-    </div>
-    <p class="cats-note">Solo se aceptan productos legalmente permitidos. RAPIDIN puede rechazar solicitudes que no cumplan esta regla.</p>
-  </div>
-</section>
-
-<section id="clientes" style="padding-top:20px">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Para clientes</span>
-      <h2 style="margin-top:16px">Compara antes de pagar un sol.</h2>
-      <p class="lead" style="margin-top:18px">Cada oferta te muestra lo necesario para decidir con calma.</p>
-      <div class="benefits">
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Precio total claro</b><p>Sin sorpresas. Cualquier cambio necesita tu autorización.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Reputación visible</b><p>Calificación y número de pedidos completados de cada repartidor.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Datos de cobro protegidos</b><p>El Yape o Plin del repartidor solo te aparece a ti, después de aceptar y solo para ese pedido.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Seguimiento en vivo</b><p>Punto de recogida, punto de entrega y la ruta del repartidor en un solo mapa.</p></div></div>
-      </div>
-    </div>
-    <div class="deck" aria-label="Ejemplo de ofertas recibidas">
-      <div class="deck-inner">
-        <div class="offer">
-          <span class="av" style="background:#4C6FFF">LM</span>
-          <div class="who"><b>Luis M.</b><span>★ 4.7 · 212 pedidos · 18 min</span></div>
-          <div class="price"><b>S/ 7.50</b><span>total</span></div>
-        </div>
-        <div class="offer best">
-          <span class="flag">Mejor valorada</span>
-          <span class="av" style="background:#20C997;color:#101C2C">CR</span>
-          <div class="who"><b>Carla R.</b><span>★ 4.9 · 486 pedidos · 12 min</span></div>
-          <div class="price"><b>S/ 6.00</b><span>total</span></div>
-        </div>
-        <div class="offer">
-          <span class="av" style="background:#FF5A1F">JP</span>
-          <div class="who"><b>Jorge P.</b><span>★ 4.6 · 98 pedidos · 10 min</span></div>
-          <div class="price"><b>S/ 8.00</b><span>total</span></div>
-        </div>
-      </div>
-      <p class="deck-caption">Ofertas de ejemplo</p>
-    </div>
-  </div>
-</section>
-
-<section class="couriers" id="repartidores">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Para repartidores</span>
-      <h2 style="margin-top:16px">Tú pones tu tarifa. Tú eliges tus pedidos.</h2>
-      <p class="lead" style="margin-top:18px">Ofertas solo en los pedidos de tu zona que te convienen. Antes de enviar cada oferta, tu panel te muestra cuánto ganas.</p>
-      <div class="benefits">
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Cobras directo</b><p>El cliente te paga a ti por efectivo, Yape, Plin o Lemon.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Trabajas cuando quieres</b><p>Activas «Disponible» cuando puedes y eliges en qué pedidos ofertar.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Requisitos mínimos</b><p>DNI y, si usas moto, licencia. Un administrador revisa tu postulación.</p></div></div>
-      </div>
-      <div style="margin-top:28px"><button class="btn dark" type="button" data-open="dlgCourier">Postular como repartidor <svg><use href="#i-arrow"/></svg></button></div>
-    </div>
-    <div class="calc join-card">
-      <h3>Cómo empiezas</h3>
-      <p class="hint">En pocos pasos ya puedes recibir pedidos en Camaná.</p>
-      <ol class="join-steps">
-        <li><b>Crea tu cuenta</b><span>Con tu celular verificado.</span></li>
-        <li><b>Postula</b><span>Envía tu DNI y, si usas moto o mototaxi, tu licencia.</span></li>
-        <li><b>Te aprobamos</b><span>Un administrador revisa tus documentos y te avisa.</span></li>
-        <li><b>Activa «Disponible» y oferta</b><span>Tú pones tu tarifa y ves tu ganancia antes de enviar cada oferta.</span></li>
-      </ol>
-      <p class="calc-foot">Las condiciones de la plataforma para repartidores las ves dentro de tu panel al postular.</p>
-    </div>
-  </div>
-</section>
-
-<section class="biz-sec" id="negocios">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Para negocios</span>
-      <h2 style="margin-top:16px">Tu local en el celular de todo Camaná.</h2>
-      <p class="lead" style="margin-top:18px">Registra tu negocio en dos minutos. Aparece en el Market con tu logo, tu portada y tus precios, y los repartidores de RAPIDIN llevan tus pedidos.</p>
-      <div class="benefits">
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Sin repartidores propios</b><p>Los repartidores verificados de RAPIDIN recogen en tu local y entregan.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Tus precios, tu catálogo</b><p>El cliente compra con el precio de tu local. Tú decides qué publicar y cuándo está agotado.</p></div></div>
-        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Solo cuando abres</b><p>Pones tus días y horario; fuera de ese horario nadie puede pedirte.</p></div></div>
-      </div>
-      <div style="margin-top:28px"><button class="btn" type="button" data-open="dlgBiz"><svg><use href="#i-store"/></svg> Registrar mi negocio</button></div>
-    </div>
-    <div class="calc join-card biz-steps">
-      <h3>Así te sumas</h3>
-      <p class="hint">Sin trámites largos. Te acompañamos por WhatsApp.</p>
-      <ol class="join-steps">
-        <li><b>Envía tus datos</b><span>Nombre, rubro, dirección y, si quieres, tu logo y una foto de portada.</span></li>
-        <li><b>Marca tu ubicación</b><span>Escribe la dirección y la confirmamos con Google Maps, o usa el GPS estando en tu local.</span></li>
-        <li><b>Te escribimos</b><span>Revisamos tu solicitud y te contactamos por WhatsApp.</span></li>
-        <li><b>Publicamos tu local</b><span>Cargamos tu catálogo y empiezas a recibir pedidos.</span></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<section id="pagos">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Medios de pago</span>
-      <h2>Paga como ya pagas en Camaná.</h2>
-      <p class="lead">El estado del pago va aparte del estado de la entrega. Si algo no cuadra, un administrador lo revisa.</p>
-    </div>
-    <div class="pay-row">
-      <div class="pay"><span class="pay-logo fb cash" style="--pc:#2F855A"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg></span><div>Efectivo<small>Al recibir</small></div></div>
-      <div class="pay"><span class="pay-logo" style="--pc:#742A8C"><img src="assets/yape.png" alt="" data-fb="Y"></span><div>Yape<small>Directo al repartidor</small></div></div>
-      <div class="pay"><span class="pay-logo" style="--pc:#0EA5C6"><img src="assets/plin.png" alt="" data-fb="P"></span><div>Plin<small>Directo al repartidor</small></div></div>
-      <div class="pay"><span class="pay-logo" style="--pc:#1F1F1F"><img src="assets/lemon.png" alt="" data-fb="L"></span><div>Lemon<small>Directo al repartidor</small></div></div>
-      <div class="pay"><span class="pay-logo" style="--pc:#FF5A1F"><img src="assets/wallet.png" alt="" data-fb="R"></span><div>Saldo RAPIDIN<small>Recargas verificadas</small></div></div>
-    </div>
-    <div class="trust">
-      <div><b>Marcas «ya pagué»</b><p>Puedes adjuntar la captura o el código de operación de tu Yape, Plin o Lemon.</p></div>
-      <div><b>El repartidor confirma</b><p>Cuando recibe el pago lo confirma en su app y el pedido sigue su curso.</p></div>
-      <div><b>Revisión si hay dudas</b><p>Si no coinciden, el pedido pasa a revisión y un administrador lo resuelve.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="apps" id="apps">
-  <div class="wrap apps-grid">
-    <div>
-      <span class="eyebrow">Apps móviles</span>
-      <h2 style="margin-top:16px">Pronto en tu celular.</h2>
-      <p class="lead" style="margin-top:18px">Dos apps conectadas a la misma plataforma: una para pedir y otra para repartir. Mientras tanto, puedes usar RAPIDIN desde esta web.</p>
-      <div class="app-list">
-        <div><b>Rapidin Delivery</b><span>Pide, compara ofertas, paga y sigue tu pedido en el mapa.</span></div>
-        <div><b>Rapidin Repartidor</b><span>Recibe pedidos de tu zona, oferta y controla tus ganancias.</span></div>
-      </div>
-      <p class="soon">Próximamente para Android y iPhone</p>
-    </div>
-    <div class="phones" aria-hidden="true">
-      <div class="phone p1">
-        <div class="screen">
-          <div class="ps-top"><span>9:41</span><span class="ps-brand">RAPID<b>IN</b></span></div>
-          <div class="ps-title">3 ofertas para tu pedido</div>
-          <div class="ps-card best"><i style="background:#20C997;color:#101C2C">CR</i><div><b>Carla R.</b><small>★ 4.9 · 12 min</small></div><strong>S/ 6.00</strong></div>
-          <div class="ps-card"><i style="background:#4C6FFF">LM</i><div><b>Luis M.</b><small>★ 4.7 · 18 min</small></div><strong>S/ 7.50</strong></div>
-          <div class="ps-card"><i style="background:#FF5A1F">JP</i><div><b>Jorge P.</b><small>★ 4.6 · 10 min</small></div><strong>S/ 8.00</strong></div>
-          <div class="ps-btn">Aceptar oferta</div>
-        </div>
-      </div>
-      <div class="phone p2">
-        <div class="screen dark">
-          <div class="ps-top"><span>9:41</span><span class="ps-brand">Repartidor</span></div>
-          <div class="ps-map"><span class="m-pin"></span><span class="m-me"></span></div>
-          <div class="ps-title">Nuevo pedido · 2.8 km</div>
-          <div class="ps-row"><span>Recoger en</span><b>Bodega</b></div>
-          <div class="ps-row"><span>Pago</span><b>Yape</b></div>
-          <div class="ps-row gain"><span>Tu oferta</span><b>S/ 6.00</b></div>
-          <div class="ps-btn teal">Enviar oferta</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="faq" style="padding-top:40px">
+<section id="faq" style="padding-top:20px">
   <div class="wrap faq-grid">
     <div>
       <span class="eyebrow">Preguntas frecuentes</span>
@@ -379,7 +125,7 @@
         <p class="lead" style="margin-top:18px">Escríbenos para sumar tu establecimiento, resolver dudas o reportar un problema con un pedido.</p>
         <button class="btn teal" type="button" data-open="dlgBiz" style="margin-top:22px"><svg><use href="#i-store"/></svg> Registrar mi negocio</button>
         <div class="contact-lines">
-          <div><span>Correo:</span> hola@rapidin.pe <span>(provisional)</span></div>
+          <div><span>WhatsApp:</span> <a href="https://wa.me/51916252754" target="_blank" rel="noopener">916 252 754</a></div>
           <div><span>Zona:</span> Camaná, Arequipa, Perú</div>
         </div>
       </div>
@@ -413,19 +159,17 @@
         <h4>Clientes</h4>
         <button type="button" data-open="dlgOrder">Solicitar pedido</button>
         <a href="#como">Cómo funciona</a>
-        <a href="#pagos">Medios de pago</a>
-        <a href="#faq">Preguntas frecuentes</a>
+                <a href="#faq">Preguntas frecuentes</a>
       </div>
       <div class="foot-col">
         <h4>Repartidores</h4>
         <button type="button" data-open="dlgCourier">Postular</button>
         <a href="#repartidores">Requisitos</a>
-        <a href="#apps">App Rapidin Repartidor</a>
-      </div>
+              </div>
       <div class="foot-col">
         <h4>Negocios</h4>
         <button type="button" data-open="dlgBiz">Registrar mi negocio</button>
-        <a href="#market">Market RAPIDIN</a>
+        <a href="#inicio">Locales en RAPIDIN</a>
       </div>
       <div class="foot-col">
         <h4>RAPIDIN</h4>
@@ -454,6 +198,9 @@
   <div class="dlg-body" id="legalBody"></div>
 </dialog>
 
+<!-- Tienda: barra del pedido (sin ingresar se puede armar; para pedir hay que ingresar) -->
+<div class="shop-bar" id="shopBar" hidden></div>
+
 <!-- Aplicación: paneles de cliente, repartidor y administración -->
 <div id="app" hidden></div>
 <dialog id="appModal" aria-labelledby="appModalT">
@@ -461,7 +208,6 @@
   <div class="dlg-body" id="appModalBody"></div>
 </dialog>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>
