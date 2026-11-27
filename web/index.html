@@ -110,7 +110,8 @@
       <details><summary>¿Puedo pedir algo sin elegir la tienda?</summary><p>Sí, con la compra libre. Describes lo que necesitas y el repartidor decide dónde comprarlo. Si cambia un producto o el precio, tiene que pedirte autorización.</p></details>
       <details><summary>¿Cuándo veo el Yape o Plin del repartidor?</summary><p>Solo después de aceptar su oferta, y solo para ese pedido. Nadie más ve esos datos.</p></details>
       <details><summary>¿Cómo me vuelvo repartidor?</summary><p>Llena la postulación con tus datos básicos y sube tu DNI (y tu licencia si usas moto). Un administrador la revisa y te avisa. Mientras esté pendiente no puedes recibir pedidos.</p></details>
-      <details><summary>¿Cómo registro mi negocio?</summary><p>Toca «Registrar mi negocio», completa los datos, marca la ubicación de tu local y, si quieres, sube tu logo y una foto de portada. Recibimos tu solicitud al instante y te escribimos por WhatsApp para publicarlo.</p></details>
+      <details><summary>¿Hasta cuándo puedo cancelar un pedido?</summary><p>En compras libres, mientras el repartidor no haya llegado al local. En pedidos a locales con panel, mientras el local no haya aceptado tu pedido (después ya lo está preparando). Si ya pagaste al local y cancelas a tiempo, el local te devuelve el dinero.</p></details>
+      <details><summary>¿Cómo registro mi negocio?</summary><p>Ingresa o crea tu cuenta, toca «Registrar mi negocio» y completa los datos, la ubicación y, si quieres, tu logo y portada. Al aprobarlo, con esa misma cuenta tendrás tu Panel de negocio: recibes pedidos, confirmas pagos por Yape, Plin o Lemon y editas tu menú.</p></details>
       <details><summary>¿Qué necesito para ser repartidor?</summary><p>Ser mayor de edad, tener tu DNI y un celular. Si repartes en moto o mototaxi, también tu licencia. Las condiciones para repartidores las ves en tu panel al postular.</p></details>
     </div>
   </div>
@@ -176,6 +177,7 @@
         <a href="#contacto">Contacto</a>
         <button type="button" data-open="dlgLegal" data-legal="privacidad">Política de privacidad</button>
         <button type="button" data-open="dlgLegal" data-legal="terminos">Términos y condiciones</button>
+        <button type="button" data-cookie-settings>Preferencias de cookies</button>
         <button type="button" data-open="dlgLogin" data-admin="1">Acceso administrativo</button>
       </div>
     </div>
@@ -186,10 +188,24 @@
   </div>
 </footer>
 
-<!-- Diálogo: cuenta (ingresar, registro, verificación y perfil) -->
-<dialog id="dlgLogin" aria-labelledby="dlgLoginT">
-  <div class="dlg-head"><h3 id="dlgLoginT">Tu cuenta</h3><button class="x" type="button" data-close aria-label="Cerrar"><svg><use href="#i-x"/></svg></button></div>
-  <div class="dlg-body" id="authBody"></div>
+<!-- Diálogo: cuenta (ingresar, registro, verificación y recuperación) -->
+<dialog id="dlgLogin" class="auth-dlg" aria-labelledby="dlgLoginT">
+  <div class="auth-shell">
+    <aside class="auth-side" aria-hidden="true">
+      <div class="as-logo"><img src="assets/rap.png" alt="" width="44" height="44"><span class="logo-word">RAPID<b>IN</b></span></div>
+      <p class="as-claim">Tu pedido,<br><em>tu precio,</em><br>tu repartidor.</p>
+      <ul class="as-list">
+        <li><span>🛵</span>Repartidores verificados de Camaná</li>
+        <li><span>💸</span>Comparas ofertas antes de aceptar</li>
+        <li><span>📍</span>Sigues tu pedido en vivo</li>
+      </ul>
+      <p class="as-foot">Solo en Camaná, Arequipa</p>
+    </aside>
+    <div class="auth-main">
+      <div class="auth-top"><div><h3 id="dlgLoginT">Ingresar</h3><p id="authSub"></p></div><button class="auth-x" type="button" data-close aria-label="Cerrar"><svg><use href="#i-x"/></svg></button></div>
+      <div id="authBody"></div>
+    </div>
+  </div>
 </dialog>
 
 <!-- Diálogo: legal -->
