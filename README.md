@@ -41,6 +41,17 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 - Los repartidores ven los productos y el precio del local **fijo**; solo ofertan su **tarifa de envío**. El cliente compara y elige.
 - Los precios se toman siempre del catálogo en el servidor, nunca de lo que envía el navegador.
 
+### Entrega confirmada por el cliente
+
+- El repartidor toca **«Entregué el pedido»** sin subir foto ni comprobante. El pedido queda en **«Entregado · por confirmar»**.
+- El cliente toca **«Sí, lo recibí»** y recién ahí se cierra el pedido y se cobra la comisión. Si responde **«No lo recibí»**, pasa a revisión y el admin decide (confirmar o cancelar).
+- Si el cliente no responde en 30 minutos (Configuración: `autoConfirmarMin`), se confirma automáticamente.
+
+### Datos iniciales
+
+- Solo cuentas de prueba (cliente, repartidor, admin) y el primer local real: **Puerto en Llamas by Ala Ruta** (Jr. Puente Grau #281, esquina con Dos de Mayo · -16.624167, -72.712889 · jueves a domingo de 19:00 a 22:30 · 981 157 504) con su carta completa.
+- Sin pedidos, reseñas, guía de precios ni solicitudes de ejemplo. La actividad simulada viene apagada.
+
 ### Pedido en curso: pago, chat y contacto
 
 - **Pago directo sin comprobantes:** el cliente copia el Yape/Plin/Lemon del repartidor, paga y toca **«Ya pagué»**. No envía código ni captura. El repartidor confirma «Sí, recibí el pago» (o «Aún no me llega»).
