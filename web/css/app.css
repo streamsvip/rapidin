@@ -216,7 +216,7 @@ body.in-app > header.nav, body.in-app > main, body.in-app > footer{display:none}
 .map-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:.8rem;color:var(--tinta-suave)}
 .map-legend span{display:inline-flex;align-items:center;gap:6px}
 .lgd{width:12px;height:12px;border-radius:4px;display:inline-block}
-.lgd.tienda{background:var(--turquesa)} .lgd.entrega{background:var(--naranja);border-radius:50%} .lgd.rep{background:var(--card);box-shadow:0 0 0 3px var(--turquesa);border-radius:50%}
+.lgd.tienda{background:var(--turquesa)} .lgd.entrega{background:var(--naranja);border-radius:50%} .lgd.rep{background:var(--naranja);box-shadow:0 0 0 3px rgba(32,201,151,.5);border-radius:50%}
 .lg-note{margin-left:auto}
 
 /* Tablas y filas */
@@ -1106,3 +1106,74 @@ button.side-switch{width:100%;border:0;background:none;font:inherit;font-size:.8
 .sup-btn .ic{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
 .sup-btn .ic path+path{fill:currentColor;stroke:none}
 @media (max-width:640px){ .main-col .topbar:has(.sup-btn) .theme-btn{display:none} }
+
+/* Motorizado RAPIDIN en Google Maps */
+.gm-pin.repartidor{width:56px;height:56px}
+.gm-pin.repartidor::before{content:"";position:absolute;inset:6px;border-radius:50%;background:rgba(32,201,151,.25);animation:riderPulse 1.8s ease-out infinite}
+.gm-rider{position:relative;display:block;width:52px;height:44px;transform:translateY(-8px);animation:riderBob .5s ease-in-out infinite alternate}
+.gm-rider.left svg{transform:scaleX(-1)}
+.gm-rider svg{width:100%;height:100%;display:block}
+.gm-pin.repartidor span{bottom:calc(100% - 4px)}
+@keyframes riderPulse{from{transform:scale(.6);opacity:.9}to{transform:scale(1.25);opacity:0}}
+@keyframes riderBob{from{transform:translateY(-8px)}to{transform:translateY(-9.5px)}}
+@media (prefers-reduced-motion:reduce){.gm-rider,.gm-pin.repartidor::before{animation:none}}
+
+/* =========================================================
+   Panel de negocio
+   ========================================================= */
+.biz-hero{background:linear-gradient(135deg,#101C2C,#1D3150);color:#fff}
+.biz-hero h2{font-size:clamp(1.3rem,2.4vw,1.7rem);margin:6px 0 8px;color:#fff}
+.biz-hero .muted{color:rgba(255,255,255,.75)}
+.eyebrow-s{font:700 .72rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--naranja,#FF5A1F)}
+.so-list{display:grid;gap:12px}
+.so-card{border:1px solid var(--linea);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--card)}
+.so-card.new{border-color:var(--warn);box-shadow:0 0 0 3px var(--warn-bg)}
+.so-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.so-head b{display:block}
+.so-head small{color:var(--tinta-suave);font-size:.82rem}
+.so-amt{font-size:1.2rem;font-variant-numeric:tabular-nums}
+.so-pay{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--info-bg)}
+.so-pay b{display:block;font-size:.92rem}
+.so-pay small{color:var(--tinta-suave);font-size:.84rem}
+.so-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.so-rider{display:flex;align-items:center;gap:8px}
+.so-rider b{display:block;font-size:.9rem}
+.so-rider small{color:var(--tinta-suave);font-size:.78rem;display:block}
+.row-btns.end{justify-content:flex-end}
+.pick-chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.pchip{border:1px solid var(--linea);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 12px;font:600 .82rem var(--f-body);cursor:pointer}
+.pchip:hover,.pchip[aria-pressed=true]{border-color:var(--naranja,#FF5A1F);color:var(--naranja,#FF5A1F)}
+.avail-t{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--tinta-suave)}
+.cob-f{border:1px solid var(--linea);border-radius:14px;padding:10px 14px 2px;margin:0 0 12px}
+.cob-f legend{display:flex;align-items:center;gap:8px;font-weight:700;padding:0 6px}
+.days.tags span{padding:6px 10px;width:auto}
+.rep-who{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rep-card{border:1px solid var(--linea);border-radius:16px;padding:14px;display:grid;gap:10px}
+.rep-card.open{border-color:var(--bad);box-shadow:0 0 0 3px var(--bad-bg)}
+.rep-people{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rep-p{border-radius:12px;background:var(--chip-bg);padding:10px 12px;display:grid;gap:6px}
+.rep-p small{color:var(--tinta-suave);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+.rep-p .row-btns{gap:6px}
+.store-pay{border:1.5px solid var(--naranja,#FF5A1F);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--card)}
+.store-pay .sp-acc{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--chip-bg);cursor:pointer;border:1.5px solid transparent}
+.store-pay .sp-acc.on{border-color:var(--naranja,#FF5A1F);background:var(--accent-bg)}
+.store-pay .sp-acc input{position:absolute;opacity:0;pointer-events:none}
+.store-pay .sp-acc b{display:block}
+.store-pay .sp-acc small{color:var(--tinta-suave)}
+.store-pay .sp-acc .btn{margin-left:auto}
+.wait-local{display:flex;gap:14px;align-items:flex-start}
+.wait-local .radar{flex:none}
+@media (max-width:640px){ .rep-people{grid-template-columns:1fr} }
+
+.pchip-r{position:relative;display:inline-flex}
+.pchip-r input{position:absolute;opacity:0;pointer-events:none}
+.pchip-r input:checked + .pchip{border-color:var(--naranja);color:var(--naranja);background:var(--accent-bg)}
+.pchip-r input:focus-visible + .pchip{outline:2px solid var(--naranja);outline-offset:2px}
+.paid-check{padding:12px;border-radius:12px;background:var(--accent-bg)}
+.store-pay .sp-acc b{font-size:.92rem;white-space:nowrap}
+.store-pay .sp-acc > span{min-width:0}
+form[data-form=info] .person small{display:block;margin-top:4px}
+@media (max-width:640px){
+  form[data-form=cobros] .two, form[data-form=info] .two{grid-template-columns:1fr}
+  .store-pay .sp-acc{flex-wrap:wrap}
+}
