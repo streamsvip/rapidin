@@ -999,3 +999,34 @@ html[data-theme=dark] body.in-app .banner.warn{color:#FFD48A}
 html[data-theme=dark] body.in-app .banner.bad{color:#FFB59A}
 html[data-theme=dark] body.in-app .banner.ok{color:#8EF0CC}
 html[data-theme=dark] body.in-app .demo-pill{color:#FF9A73}
+
+/* «En un local»: local elegido + acceso al catálogo */
+#shopFind{display:grid;gap:10px;min-width:0}
+.sel-store{display:grid;gap:12px;padding:14px;border-radius:18px;background:var(--app-bg);box-shadow:inset 0 0 0 1.5px var(--naranja)}
+.ss-top{display:flex;align-items:center;gap:12px;min-width:0}
+.ss-top .cat-badge{width:52px;height:52px;border-radius:15px;flex:none}
+.ss-t{flex:1;min-width:0;display:grid;gap:1px}
+.ss-t small{font-size:.8rem;color:var(--tinta-suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss-t small.pos{color:var(--ok)}
+.ss-change{flex:none;font-size:.88rem;align-self:flex-start}
+.ss-cat{width:100%;justify-content:flex-start;gap:12px;padding:12px 14px;border-radius:14px;text-align:left}
+.ss-cat .ic{width:22px;height:22px;flex:none}
+.ss-cat span{flex:1;display:grid;gap:1px}
+.ss-cat b{font-size:.98rem}
+.ss-cat small{font-weight:500;font-size:.78rem;opacity:.85}
+.ss-cat .arr{width:18px;height:18px}
+.ss-or{display:flex;align-items:center;gap:10px;color:var(--tinta-suave);font-size:.8rem;margin:0}
+.ss-or::before,.ss-or::after{content:"";flex:1;height:1px;background:var(--linea)}
+.desc-box{display:grid;gap:10px;min-width:0}
+.desc-box[hidden]{display:none}
+.desc-box .lbl{margin:2px 0 -4px}
+.nota-f{margin:0}
+.nota-f[hidden]{display:none}
+.oc-note{font-size:.86rem;color:var(--tinta-suave);margin-top:-4px}
+.shop-row.off .sr-main small:last-child{color:var(--warn)}
+.sel-store,.sel-store > *,.ss-top,.ss-t,.ss-cat span{min-width:0}
+.sel-store .sr-top{display:flex;gap:8px;align-items:baseline;min-width:0}
+.sel-store .sr-top b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss-cat small{white-space:normal}
+.sel-store .sr-top{flex-wrap:wrap;row-gap:2px}
+.sel-store .sr-top b{white-space:normal;overflow:visible;line-height:1.25}
