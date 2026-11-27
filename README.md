@@ -62,6 +62,10 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 - Solo cuentas de prueba (cliente, repartidor, admin) y el primer local real: **Puerto en Llamas by Ala Ruta** (Jr. Puente Grau #281, esquina con Dos de Mayo · -16.624167, -72.712889 · jueves a domingo de 19:00 a 22:30 · 981 157 504) con su carta completa.
 - Sin pedidos, reseñas, guía de precios ni solicitudes de ejemplo. La actividad simulada viene apagada.
 
+### Pedir a un local registrado
+
+Al elegir un local con carta se abre su catálogo: ventana flotante centrada en PC y pantalla completa en celular, con categorías para saltar entre secciones. Lo que elijas aparece en **Tu pedido** con cantidades editables; solo queda un campo de **Indicaciones para el repartidor**. El botón «Agregar más productos» vuelve a abrir el catálogo.
+
 ### Pedido en curso: pago, chat y contacto
 
 - **Pago directo sin comprobantes:** el cliente copia el Yape/Plin/Lemon del repartidor, paga y toca **«Ya pagué»**. No envía código ni captura. El repartidor confirma «Sí, recibí el pago» (o «Aún no me llega»).
@@ -104,15 +108,9 @@ Es distinta del Market y el cliente no la ve. Sirve para cotizar pedidos de **co
 - Al ofertar en una compra libre, la calculadora sugiere productos según lo que pidió el cliente y suma el costo automáticamente.
 - En sus entregas de tienda o Market, el repartidor ve el teléfono del local para pedir antes de llegar.
 
-### Actividad simulada
+### Modo de prueba local
 
-Para probar sola o solo una persona, hay repartidores y clientes simulados:
-- Cuando un cliente publica un pedido, los repartidores simulados envían ofertas a los pocos segundos y, si aceptas una, avanzan el pedido hasta la entrega.
-- Los clientes simulados publican pedidos para que el repartidor de prueba tenga trabajo, aceptan su oferta, pagan y califican.
-
-Se desactiva en **Admin → Configuración → Actividad simulada**. Para volver a los datos iniciales: menú de usuario → **Restablecer datos de demo**.
-
-Consejo: abre dos pestañas (una como cliente y otra como repartidor) para ver el ciclo completo en tiempo real.
+La web publicada usa Firebase. Para probar en tu PC sin tocar los datos reales, abre la consola del navegador y ejecuta `localStorage.setItem("rapidin.forceDemo","1")`, luego recarga: vuelven las cuentas de prueba y los datos guardados en el navegador. Para salir: `localStorage.removeItem("rapidin.forceDemo")`.
 
 ## Estructura de la web
 
@@ -131,19 +129,29 @@ web/
 ├── js/business.js        Formulario público «Registra tu negocio» y aviso por WhatsApp
 ├── js/ui.js              Utilidades de interfaz
 ├── js/panels/            cliente.js, repartidor.js, admin.js, common.js
-├── js/demo/store.js      Datos de demostración (se reemplaza por Firestore)
-├── js/demo/api.js        Reglas de negocio (se reemplazan por Cloud Functions)
-├── js/demo/sim.js        Actividad simulada (solo demo)
+├── js/demo/store.js      Elige el backend (Firebase o modo de prueba local) y los datos iniciales
+├── js/demo/fbstore.js    Conexión con Firebase Auth y Firestore en tiempo real
+├── js/demo/api.js        Reglas de negocio (fase 2: Cloud Functions)
+├── js/demo/sim.js        Actividad simulada (solo modo de prueba)
 └── assets/               Logos (ver «Logos»)
 ```
 
-### Paso a Firebase
+### Firebase (proyecto `rapidin-87442`)
 
-Los paneles solo hablan con `demo/api.js` y `demo/store.js`. Para conectar Firebase se reemplazan esos dos archivos por:
-- Firebase Authentication (correo + verificación del celular por SMS).
-- Firestore con las mismas colecciones (`users`, `couriers`, `orders`, `wallets`, `walletLedger`, `topups`, `withdrawals`, `commissionRules`, `config`, `establishments`, `zones`, `auditLog`…).
-- Cloud Functions con los mismos nombres (`createOrder`, `submitOffer`, `acceptOffer`, `advanceOrderState`, `confirmTopup`…).
-- Google Maps en lugar del mapa referencial.
+La web está conectada a Firebase Authentication (correo y contraseña) y Firestore, en el plan gratuito Spark. La configuración está en `web/js/config.js` (no es secreta).
+
+Puesta en marcha (una sola vez):
+1. **Authentication → Método de acceso:** habilita *Correo electrónico/contraseña*.
+2. **Authentication → Configuración → Dominios autorizados:** agrega `streamsvip.github.io`.
+3. **Firestore → Reglas:** pega el contenido de `firestore.rules` y pulsa **Publicar**. Repite cada vez que cambie ese archivo.
+4. **Firestore → Datos:** colección `admins`, documento con el UID del administrador (campo `nombre`).
+5. Entra a la web con la cuenta de administrador: en **Resumen** pulsa **Cargar datos iniciales** (comisiones, zonas, Puerto en Llamas y su carta).
+
+Colecciones: `meta/app` (comisiones, zonas, configuración), `users`, `perfiles` (nombre y foto públicos), `couriers`, `establishments`, `products`, `orders`, `ledger`, `topups`, `withdrawals`, `courierApplications`, `businessApplications`, `proveedores`, `preciosRef`, `auditLog`, `notifications/{uid}/items`.
+
+En Spark los saldos se calculan a partir de las recargas confirmadas, los ajustes y las comisiones de los pedidos entregados; las reglas de `firestore.rules` limitan qué campos puede cambiar cada rol.
+
+**Fase 2 (plan Blaze):** Cloud Functions para comisiones, saldos y asignación de pedidos (cierra los límites de la fase 1: hoy un repartidor podría manipular su propia oferta y los datos de cobro de los repartidores son visibles para usuarios con sesión), verificación del celular por SMS y Storage para fotos, logos y portadas.
 
 ## Conectar Google Maps
 
@@ -190,13 +198,13 @@ La web usa módulos de JavaScript, así que **no funciona abriendo `index.html` 
 ## Publicar
 
 - **GitHub Pages:** `.github/workflows/pages.yml` publica la carpeta `web/` en cada cambio a `main`.
-- **Firebase Hosting (más adelante):** `firebase.json` ya apunta a `web/`.
+- **Firebase Hosting (más adelante):** `firebase.json` ya apunta a `web/` y a `firestore.rules` (`firebase deploy --only firestore:rules` publica las reglas).
 
 ## Seguridad
 
 - Nunca subas credenciales al repositorio. `.gitignore` excluye `.env` y claves de servicio.
 - La configuración web de Firebase (apiKey, etc.) no es secreta, pero la API key debe quedar restringida por dominio en Google Cloud.
-- La contraseña de prueba y los datos simulados existen solo en esta demostración.
+- La contraseña de prueba y los datos simulados existen solo en el modo de prueba local.
 
 ## Marca
 
