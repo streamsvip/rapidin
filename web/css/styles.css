@@ -788,10 +788,18 @@ dialog.auth-dlg{width:min(900px,calc(100% - 24px));background:#fff;overflow:hidd
 .auth-submit:disabled{opacity:.7;cursor:wait;transform:none}
 .auth-switch{text-align:center;margin-top:16px;font-size:.92rem;color:var(--tinta-suave)}
 @media (max-width:760px){
-  dialog.auth-dlg{width:100%;max-width:none;height:100%;max-height:none;margin:0;border-radius:0}
-  .auth-shell{grid-template-columns:1fr;min-height:100%;max-height:none;height:100%}
-  .auth-side{display:none}
-  .auth-main{padding:20px 18px 28px}
+  dialog.auth-dlg{width:100%;max-width:none;height:100%;height:100dvh;max-height:none;margin:0;border-radius:0;padding:0;overflow:hidden}
+  .auth-shell{grid-template-columns:1fr;grid-template-rows:auto 1fr;min-height:0;max-height:none;height:100%}
+  /* Cabecera de marca compacta en lugar del panel lateral */
+  .auth-side{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px 18px;border-radius:0 0 22px 22px}
+  .auth-side::after{width:140px;height:140px;right:-40px;top:-50px}
+  .as-logo img{width:38px;height:38px}
+  .as-claim{font-size:1.05rem;line-height:1.05;text-align:right}
+  .as-claim br{display:none}
+  .as-claim em{display:block}
+  .as-list,.as-foot{display:none}
+  .auth-main{padding:18px 18px 28px;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .auth-main::-webkit-scrollbar{display:none}
   .f-2{grid-template-columns:1fr}
 }
 
@@ -959,3 +967,5 @@ main + footer.ft{margin-top:60px}
   .pay-c > span{grid-row:span 2}
 }
 @media (max-width:760px){ .pay-ics img{width:30px;height:30px;border-radius:10px} }
+
+.pay-ics.rap img{padding:0;background:#FF5A1F}
