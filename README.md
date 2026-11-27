@@ -41,6 +41,19 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 - Los repartidores ven los productos y el precio del local **fijo**; solo ofertan su **tarifa de envío**. El cliente compara y elige.
 - Los precios se toman siempre del catálogo en el servidor, nunca de lo que envía el navegador.
 
+### Pedido en curso: pago, chat y contacto
+
+- **Pago directo sin comprobantes:** el cliente copia el Yape/Plin/Lemon del repartidor, paga y toca **«Ya pagué»**. No envía código ni captura. El repartidor confirma «Sí, recibí el pago» (o «Aún no me llega»).
+- **Chat del pedido** entre cliente y repartidor, con respuestas rápidas y contador de no leídos. El administrador lo ve en el detalle del pedido.
+- **Llamar y WhatsApp** como botones en todo el sistema.
+- **Foto de perfil:** obligatoria para postular como repartidor; se ve en ofertas, pedido y chat.
+
+### Market por especialidades y calificaciones
+
+- Cada local tiene hasta 4 especialidades (pollo a la brasa, broaster, chifa, pizzas…) que el admin elige.
+- El Market muestra categorías con ícono, ranking «Mejor calificados», orden y filtro de abiertos.
+- Al recibir el pedido, el cliente califica al repartidor y al local; la reseña aparece en la página del local.
+
 ### Registro de negocios
 
 - En el inicio hay un botón **«¿Tienes un negocio en Camaná?»**, una sección **Para negocios** y enlaces en el menú, el contacto y el pie.
