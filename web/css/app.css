@@ -622,3 +622,98 @@ body.in-app > header.nav, body.in-app > main, body.in-app > footer{display:none}
 .biz-ok h2{font-size:1.35rem;font-stretch:112%;margin-bottom:8px}
 
 @media (max-width:560px){ #appModal .two{grid-template-columns:1fr} }
+
+/* =========================================================
+   Pedir: una sola pantalla corta (pedido libre y confirmar Market)
+   ========================================================= */
+.qa{max-width:720px;margin:0 auto;display:grid;gap:14px}
+.qa .back{margin-bottom:0}
+.qa-card{background:var(--card);border-radius:20px;padding:18px;box-shadow:0 1px 0 var(--linea);display:grid;gap:12px;min-width:0}
+.qa-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.qa-h h3{font:800 1rem var(--f-display);font-stretch:108%}
+.qa-main{padding:22px}
+.qa-title{font:900 clamp(1.45rem,4vw,1.9rem)/1.1 var(--f-display);font-stretch:115%}
+.qa-sub{color:var(--tinta-suave);font-size:.92rem;margin-top:-4px}
+.qa-text{font-size:1.05rem;line-height:1.45;resize:vertical;min-height:92px;border-radius:16px}
+.in.sm{padding:11px 13px;font-size:.92rem}
+.qa-ref{background:var(--app-bg)}
+.warn-t{color:var(--warn);font-weight:700}
+.ic.sm{width:16px;height:16px}
+
+.sug-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:-2px -2px 0;padding:2px}
+.sug-row::-webkit-scrollbar{display:none}
+.sug{flex:none;border:0;border-radius:999px;padding:8px 13px;background:#FFF1E9;color:var(--accent-t);font:600 .84rem var(--f-body);cursor:pointer;transition:background var(--dur)}
+.sug:hover{background:#FFE0CF}
+
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--app-bg);padding:5px;border-radius:16px}
+.seg2 label{cursor:pointer;position:relative}
+.seg2 input{position:absolute;opacity:0;pointer-events:none}
+.seg2 span{display:grid;gap:1px;padding:10px 12px;border-radius:12px;transition:background var(--dur),box-shadow var(--dur)}
+.seg2 b{font-size:.93rem}
+.seg2 small{font-size:.76rem;color:var(--tinta-suave)}
+.seg2 input:checked + span{background:var(--card);box-shadow:0 2px 10px -4px rgba(16,28,44,.3),inset 0 0 0 1.5px var(--naranja)}
+.seg2 input:focus-visible + span{outline:2px solid var(--naranja);outline-offset:2px}
+
+.pill-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:2px 2px 6px;margin:0 -2px}
+.addr-pill,.shop-pill{flex:none;display:flex;align-items:center;gap:10px;text-align:left;border:0;border-radius:14px;padding:10px 14px 10px 11px;background:var(--app-bg);color:var(--noche);font:inherit;cursor:pointer;max-width:230px;transition:box-shadow var(--dur),background var(--dur)}
+.addr-pill span,.shop-pill span{display:grid;min-width:0}
+.addr-pill b,.shop-pill b{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.addr-pill small,.shop-pill small{font-size:.76rem;color:var(--tinta-suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.addr-pill[aria-pressed=true],.shop-pill[aria-pressed=true]{background:#FFF1E9;box-shadow:inset 0 0 0 1.5px var(--naranja)}
+.addr-pill[aria-pressed=true] .ic{color:var(--naranja)}
+.addr-pill .plus,.co-logo.plus{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--card);font-weight:800;color:var(--naranja);box-shadow:inset 0 0 0 1px var(--linea)}
+.shop-pill.off{opacity:.55;cursor:not-allowed}
+.co-logo{width:36px;height:36px;border-radius:11px;flex:none;display:grid;place-items:center;background:var(--cat,#0EA5C6);color:#fff;overflow:hidden}
+.co-logo img{width:100%;height:100%;object-fit:cover}
+.co-logo .cat-ic{width:19px;height:19px}
+.co-logo.plus{width:36px;height:36px;font-size:1.1rem}
+
+#tiendaBox{display:grid;gap:10px}
+#tiendaBox[hidden],#otraBox[hidden],.dl-box[hidden]{display:none}
+#otraBox{display:grid;gap:10px}
+#otraBox .two{gap:8px}
+.loc-chip[aria-pressed=true]{background:#FFF1E9;box-shadow:inset 0 0 0 1.5px var(--naranja)}
+.loc-chip .ic{vertical-align:-3px}
+
+.dl-box{display:grid;gap:10px}
+.dl-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.save-row{display:flex;align-items:center;gap:10px}
+.save-row .check{margin:0;white-space:nowrap;align-items:center}
+.save-row .check input{margin-top:0}
+.save-row .in{flex:1;min-width:0}
+.save-row .in:disabled{opacity:.5}
+
+.pay-pills{display:flex;flex-wrap:wrap;gap:8px}
+.pay-pill{position:relative;cursor:pointer}
+.pay-pill input{position:absolute;opacity:0;pointer-events:none}
+.pay-pill > span:last-child{font-weight:600;font-size:.9rem}
+.pay-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 13px 8px 9px;border-radius:999px;background:var(--app-bg);transition:box-shadow var(--dur),background var(--dur)}
+.pay-pill small{color:var(--tinta-suave);font-weight:500;font-size:.78rem}
+.pay-pill:has(input:checked){background:#FFF1E9;box-shadow:inset 0 0 0 1.5px var(--naranja)}
+.pay-pill:has(input:focus-visible){outline:2px solid var(--naranja);outline-offset:2px}
+
+.co-store{display:flex;align-items:center;gap:12px}
+.co-store div{display:grid}
+.co-store small{font-size:.8rem}
+.add-note{justify-self:start;font-size:.88rem}
+.qa-foot{font-size:.82rem;color:var(--tinta-suave);text-align:center;padding:0 10px;line-height:1.5}
+
+.qa-bar{position:sticky;bottom:12px;z-index:15;margin-top:4px}
+.qa-bar-in{display:flex;align-items:center;gap:14px;background:var(--noche);color:#fff;border-radius:20px;padding:10px 10px 10px 18px;box-shadow:0 18px 40px -16px rgba(16,28,44,.65)}
+.qa-sum{flex:1;min-width:0;display:grid}
+.qa-sum b{font-size:1rem}
+.qa-sum b small{font-weight:500;color:rgba(255,255,255,.65)}
+.qa-sum span{font-size:.8rem;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qa-sum .warn-t{color:#FFB38F}
+.qa-bar .btn{flex:none;box-shadow:none}
+.qa-bar .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.qa-err{background:var(--bad-bg);border-radius:12px;margin-top:6px;padding:0 12px}
+.qa-err:empty{display:none}
+.qa-err:not(:empty){padding:8px 12px}
+@media (max-width:960px){
+  .qa-bar{bottom:calc(74px + env(safe-area-inset-bottom))}
+  .qa-card{padding:16px;border-radius:18px}
+  .qa-main{padding:18px}
+  .qa-bar .btn{padding:13px 16px}
+}
+@media (max-width:420px){ .seg2 small{display:none} }
