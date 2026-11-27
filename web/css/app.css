@@ -1095,3 +1095,14 @@ body.sheet-on{overflow:hidden}
 .items-box .items li{min-width:0}
 .items-box .it-name{min-width:0;overflow-wrap:anywhere}
 .cs-sec{padding:14px 0 0}
+
+/* Soporte por WhatsApp */
+button.side-switch{width:100%;border:0;background:none;font:inherit;font-size:.88rem;cursor:pointer;text-align:left}
+.side-support{color:#7BE0A1}
+.side-support:hover{color:#A8F0C4}
+
+/* Soporte por WhatsApp en la barra superior (cliente y repartidor) */
+.sup-btn{color:#1FA855}
+.sup-btn .ic{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.sup-btn .ic path+path{fill:currentColor;stroke:none}
+@media (max-width:640px){ .main-col .topbar:has(.sup-btn) .theme-btn{display:none} }
