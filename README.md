@@ -41,6 +41,16 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 - Los repartidores ven los productos y el precio del local **fijo**; solo ofertan su **tarifa de envío**. El cliente compara y elige.
 - Los precios se toman siempre del catálogo en el servidor, nunca de lo que envía el navegador.
 
+### Comisión de compra libre
+
+- **6 % del total de la oferta**, con mínimo S/ 1.50 y máximo S/ 6 (editable en Admin → Comisiones).
+- Se calcula sobre el total que paga el cliente, así no conviene mover dinero del envío a los productos. Lo que el repartidor ahorre comprando más barato es suyo.
+- Market y tienda específica siguen con la tabla por distancia.
+
+### Tema claro / oscuro
+
+- Botón de luna/sol en la barra superior de los paneles y opción Claro / Oscuro / Sistema en el menú del usuario. Se recuerda en el dispositivo. La web pública sigue en tema claro.
+
 ### Entrega confirmada por el cliente
 
 - El repartidor toca **«Entregué el pedido»** sin subir foto ni comprobante. El pedido queda en **«Entregado · por confirmar»**.
