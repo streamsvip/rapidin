@@ -67,6 +67,18 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 
 Al elegir un local con carta se abre su catálogo: ventana flotante centrada en PC y pantalla completa en celular, con categorías para saltar entre secciones. Lo que elijas aparece en **Tu pedido** con cantidades editables; solo queda un campo de **Indicaciones para el repartidor**. El botón «Agregar más productos» vuelve a abrir el catálogo.
 
+### Panel de negocio (rol «negocio»)
+
+1. El dueño crea su cuenta e ingresa a **Registrar mi negocio** (pide sesión). La solicitud llega a **Admin → Negocios nuevos**.
+2. Al aprobarla, esa cuenta recibe el rol `negocio` y ve su **Panel de negocio**. Para un local ya existente (por ejemplo Puerto en Llamas), el admin abre **Establecimientos → Editar** y escribe el correo de la cuenta del dueño.
+3. En su panel el negocio: confirma pagos y acepta o rechaza pedidos, marca «Pedido listo», edita su menú con fotos y agotados, su horario, abre o cierra por hoy y registra su Yape, Plin o Lemon.
+
+**Pedido a un local con panel:** el cliente paga los productos directo al local (Yape, Plin o Lemon; sin efectivo ni saldo) y toca «Ya pagué» → estado `esperando_local` → el local confirma el pago y acepta → se buscan repartidores, que solo ofertan el envío → entrega normal. Si el local no tiene número de cobro, el pedido sigue el flujo anterior (el repartidor compra).
+
+**Cancelación del cliente:** local con panel → solo mientras el local no acepte. Compra libre o local sin panel → hasta «Camino a recogida» (desde que el repartidor llega al local, ya no).
+
+**Reportes:** el cliente reporta al repartidor y el repartidor al cliente desde el pedido; llegan a **Admin → Reportes** con los contactos de ambos y el botón para suspender la cuenta.
+
 ### Pedido en curso: pago, chat y contacto
 
 - **Pago directo sin comprobantes:** el cliente copia el Yape/Plin/Lemon del repartidor, paga y toca **«Ya pagué»**. No envía código ni captura. El repartidor confirma «Sí, recibí el pago» (o «Aún no me llega»).
@@ -144,7 +156,7 @@ Puesta en marcha (una sola vez):
 1. **Authentication → Método de acceso:** habilita *Correo electrónico/contraseña*.
 2. **Authentication → Configuración → Dominios autorizados:** agrega `streamsvip.github.io`.
 3. **Firestore → Reglas:** pega el contenido de `firestore.rules` y pulsa **Publicar**. Repite cada vez que cambie ese archivo.
-4. **Firestore Database → Datos → Iniciar colección** `admins`. ID del documento: el UID de tu cuenta (Authentication → Usuarios). Campo `nombre` (string). Sin este documento la cuenta no entra al panel de administrador.
+4. **Administrador:** tu UID está en `web/js/config.js` (`adminUids`) y en `firestore.rules`. Al ingresar, la web crea sola tu registro en la colección `admins`. Para sumar otro admin, agrega su UID en ambos archivos y vuelve a publicar las reglas.
 5. Entra a la web con la cuenta de administrador: en **Resumen** pulsa **Cargar datos iniciales** (comisiones, zonas, Puerto en Llamas y su carta).
 6. Si en ese navegador creaste locales con la versión de prueba anterior, el **Resumen** muestra «Locales guardados en este navegador» → **Guardar en Firestore**.
 
