@@ -43,6 +43,8 @@
     <nav class="nav-links" id="navLinks" aria-label="Principal">
       <a href="#inicio">Locales</a>
       <a href="#como">Cómo funciona</a>
+      <a href="#pagos">Medios de pago</a>
+      <a href="#apps">Apps</a>
       <a href="#repartidores">Trabaja con nosotros</a>
       <a href="#negocios">Registra tu negocio</a>
       <a href="#faq">Ayuda</a>
@@ -53,6 +55,15 @@
 <main>
 <section class="shop" id="inicio">
   <div class="wrap">
+    <p class="shop-hi">Hola 👋 <b>¿Qué pedimos hoy en Camaná?</b></p>
+    <div class="promo" id="promo" aria-roledescription="carrusel" aria-label="Novedades">
+      <div class="promo-track" id="promoTrack">
+        <button type="button" class="promo-s ps-1" data-go="locales"><span class="promo-t"><small>Market RAPIDIN</small><b>Pollo, alitas y más, con el precio del local</b><em>Ver locales →</em></span><span class="promo-a" aria-hidden="true">🍗</span></button>
+        <button type="button" class="promo-s ps-2" data-go="libre"><span class="promo-t"><small>Tú pones el pedido</small><b>Los repartidores te ofertan y tú eliges</b><em>Pedir algo →</em></span><span class="promo-a" aria-hidden="true">🛵</span></button>
+        <button type="button" class="promo-s ps-3" data-open="dlgBiz"><span class="promo-t"><small>¿Tienes un negocio?</small><b>Vende en RAPIDIN y cobra directo por Yape</b><em>Registrar mi negocio →</em></span><span class="promo-a" aria-hidden="true">🏪</span></button>
+      </div>
+      <div class="promo-dots" id="promoDots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+    </div>
     <div class="shop-tiles">
       <button type="button" class="tile t-food" data-go="locales">
         <span class="tile-txt"><b>Restaurantes y locales</b><small>Pide del menú con el precio del local</small></span>
@@ -76,7 +87,15 @@
       <div class="how-i"><span>2</span><b>Recibe ofertas</b><p>Los repartidores de Camaná te ofertan el envío con precio y tiempo.</p></div>
       <div class="how-i"><span>3</span><b>Elige y síguelo</b><p>Aceptas la que te conviene y lo ves llegar en el mapa.</p></div>
     </div>
-    <p class="how-pay">Paga con <b>efectivo</b>, <b>Yape</b>, <b>Plin</b> o <b>Lemon</b>. Solo atendemos en <b>Camaná, Arequipa</b>.</p>
+    <div class="pays" id="pagos">
+      <div class="pays-h"><h3>Medios de pago</h3><p>Pagas el envío y tus compras directo al repartidor que elegiste, con el medio que prefieras.</p></div>
+      <div class="pays-grid">
+        <article class="pay-c"><span class="pay-ic cash" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg></span><b>Efectivo</b><p>Pagas al repartidor al recibir tu pedido. Ten el monto exacto o avísale si necesitas vuelto.</p></article>
+        <article class="pay-c"><span class="pay-ics" aria-hidden="true"><img src="assets/yape.png" alt="" width="34" height="34"><img src="assets/plin.png" alt="" width="34" height="34"><img src="assets/lemon.png" alt="" width="34" height="34"></span><b>Yape, Plin o Lemon</b><p>Transfieres al número del repartidor, que ves solo en tu pedido, y tocas «Ya pagué». Él confirma que lo recibió.</p></article>
+        <article class="pay-c"><span class="pay-ic wallet" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h12v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2Z"/><path d="M16 14h.01"/></svg></span><b>Saldo RAPIDIN <span class="soon-tag" id="paySaldoTag">Próximamente</span></b><p>Recargas tu billetera una vez y pagas tus pedidos con un toque. El monto se descuenta recién cuando confirmas la entrega.</p></article>
+      </div>
+      <p class="pays-note">En locales con Panel de negocio, tus productos se pagan directo al local por Yape, Plin o Lemon antes de que lo prepare; al repartidor solo le pagas el envío. Solo atendemos en <b>Camaná, Arequipa</b>.</p>
+    </div>
   </div>
 </section>
 
@@ -95,8 +114,49 @@
       <button class="btn teal" type="button" data-open="dlgBiz"><svg><use href="#i-store"/></svg> Registrar mi negocio</button>
     </article>
   </div>
-  <div class="wrap"><p class="join-apps"><b>Apps para Android y iPhone muy pronto.</b> Mientras tanto, usa RAPIDIN desde esta web.</p></div>
 </section>
+
+<section class="apps" id="apps">
+  <div class="wrap apps-grid">
+    <div>
+      <span class="eyebrow">Apps móviles</span>
+      <h2 style="margin-top:16px">Pronto en tu celular.</h2>
+      <p class="lead" style="margin-top:18px">Dos apps conectadas a la misma plataforma: una para pedir y otra para repartir. Los negocios administran su local desde su Panel de negocio. Mientras tanto, usa RAPIDIN desde esta web.</p>
+      <div class="app-list">
+        <div><b>Rapidin Delivery</b><span>Pide, compara ofertas, paga y sigue tu pedido en el mapa.</span></div>
+        <div><b>Rapidin Repartidor</b><span>Recibe pedidos de tu zona, oferta y controla tus ganancias.</span></div>
+      </div>
+      <div class="store-badges">
+        <span class="store-b" aria-label="Google Play, próximamente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9.2-8.5L4 3.5Z" fill="#20C997"/><path d="M13.2 12 4 3.5l12 6.8-2.8 1.7Z" fill="#4C6FFF"/><path d="M13.2 12 4 20.5l12-6.8-2.8-1.7Z" fill="#FF5A1F"/><path d="m16 10.3 3.6 2-3.6 2-2.8-2.3 2.8-1.7Z" fill="#FFC53D"/></svg><span><small>Próximamente en</small>Google Play</span></span>
+        <span class="store-b" aria-label="App Store, próximamente"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5a4.3 4.3 0 0 0-3.4-1.8c-1.4-.2-2.8.8-3.5.8-.7 0-1.8-.8-3-.8a4.5 4.5 0 0 0-3.8 2.3c-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.5-3.7ZM14.2 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4Z"/></svg><span><small>Próximamente en</small>App Store</span></span>
+      </div>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="phone p1">
+        <div class="screen">
+          <div class="ps-top"><span>9:41</span><span class="ps-brand">RAPID<b>IN</b></span></div>
+          <div class="ps-title">3 ofertas para tu pedido</div>
+          <div class="ps-card best"><i style="background:#20C997;color:#101C2C">CR</i><div><b>Carla R.</b><small>★ 4.9 · 12 min</small></div><strong>S/ 6.00</strong></div>
+          <div class="ps-card"><i style="background:#4C6FFF">LM</i><div><b>Luis M.</b><small>★ 4.7 · 18 min</small></div><strong>S/ 7.50</strong></div>
+          <div class="ps-card"><i style="background:#FF5A1F">JP</i><div><b>Jorge P.</b><small>★ 4.6 · 10 min</small></div><strong>S/ 8.00</strong></div>
+          <div class="ps-btn">Aceptar oferta</div>
+        </div>
+      </div>
+      <div class="phone p2">
+        <div class="screen dark">
+          <div class="ps-top"><span>9:41</span><span class="ps-brand">Repartidor</span></div>
+          <div class="ps-map"><span class="m-pin"></span><span class="m-me"></span></div>
+          <div class="ps-title">Nuevo pedido · 2.8 km</div>
+          <div class="ps-row"><span>Recoger en</span><b>Bodega</b></div>
+          <div class="ps-row"><span>Pago</span><b>Yape</b></div>
+          <div class="ps-row gain"><span>Tu oferta</span><b>S/ 6.00</b></div>
+          <div class="ps-btn teal">Enviar oferta</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section id="faq" style="padding-top:20px">
   <div class="wrap faq-grid">
@@ -112,7 +172,7 @@
       <details><summary>¿Cómo me vuelvo repartidor?</summary><p>Llena la postulación con tus datos básicos y sube tu DNI (y tu licencia si usas moto). Un administrador la revisa y te avisa. Mientras esté pendiente no puedes recibir pedidos.</p></details>
       <details><summary>¿Hasta cuándo puedo cancelar un pedido?</summary><p>En compras libres, mientras el repartidor no haya llegado al local. En pedidos a locales con panel, mientras el local no haya aceptado tu pedido (después ya lo está preparando). Si ya pagaste al local y cancelas a tiempo, el local te devuelve el dinero.</p></details>
       <details><summary>¿Cómo registro mi negocio?</summary><p>Ingresa o crea tu cuenta, toca «Registrar mi negocio» y completa los datos, la ubicación y, si quieres, tu logo y portada. Al aprobarlo, con esa misma cuenta tendrás tu Panel de negocio: recibes pedidos, confirmas pagos por Yape, Plin o Lemon y editas tu menú.</p></details>
-      <details><summary>¿Qué necesito para ser repartidor?</summary><p>Ser mayor de edad, tener tu DNI y un celular. Si repartes en moto o mototaxi, también tu licencia. Las condiciones para repartidores las ves en tu panel al postular.</p></details>
+      <details><summary>¿Qué necesito para ser repartidor?</summary><p>Ser mayor de edad, tener tu DNI y un celular. Si repartes en moto o mototaxi, también tu licencia. Cuando aprobamos tu cuenta te explicamos cómo ganas, por WhatsApp y en tu panel.</p></details>
     </div>
   </div>
 </section>
@@ -145,45 +205,54 @@
 </section>
 </main>
 
-<footer>
+<footer class="ft">
   <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
+    <div class="ft-cta">
+      <div><b>¿Listo para pedir?</b><span>Locales de Camaná y repartidores que te ofertan el envío.</span></div>
+      <div class="ft-cta-btns"><button class="btn" type="button" data-open="dlgOrder">Pedir algo</button><a class="btn ghost-light" href="https://wa.me/51916252754" target="_blank" rel="noopener">Escríbenos</a></div>
+    </div>
+    <div class="ft-top">
+      <div class="ft-brand">
         <a class="logo" href="#inicio" aria-label="RAPIDIN, inicio">
           <img class="logo-img" src="assets/rap.png" alt="" width="40" height="40">
-          <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" hidden><rect width="40" height="40" rx="12" fill="#FF5A1F"/><path d="M13 29V11h8.5a5.5 5.5 0 0 1 1.6 10.76L28 29h-5.2l-4.3-6.8H17.6V29Z" fill="#fff"/><path d="M4 15h6M2 20h7M4 25h6" stroke="#101C2C" stroke-width="2.4" stroke-linecap="round"/></svg>
           <span class="logo-word">RAPID<b>IN</b></span>
         </a>
         <p>Tu pedido, tu precio, tu repartidor. Delivery por ofertas en Camaná, Arequipa.</p>
+        <ul class="ft-contact">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.2A8.5 8.5 0 1 1 20.5 11.6Z"/></svg><a href="https://wa.me/51916252754" target="_blank" rel="noopener">WhatsApp 916 252 754</a></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Camaná, Arequipa, Perú</span></li>
+        </ul>
       </div>
-      <div class="foot-col">
-        <h4>Clientes</h4>
-        <button type="button" data-open="dlgOrder">Solicitar pedido</button>
-        <a href="#como">Cómo funciona</a>
-                <a href="#faq">Preguntas frecuentes</a>
-      </div>
-      <div class="foot-col">
-        <h4>Repartidores</h4>
-        <button type="button" data-open="dlgCourier">Postular</button>
-        <a href="#repartidores">Requisitos</a>
-              </div>
-      <div class="foot-col">
-        <h4>Negocios</h4>
-        <button type="button" data-open="dlgBiz">Registrar mi negocio</button>
-        <a href="#inicio">Locales en RAPIDIN</a>
-      </div>
-      <div class="foot-col">
-        <h4>RAPIDIN</h4>
-        <a href="#contacto">Contacto</a>
-        <button type="button" data-open="dlgLegal" data-legal="privacidad">Política de privacidad</button>
-        <button type="button" data-open="dlgLegal" data-legal="terminos">Términos y condiciones</button>
-        <button type="button" data-cookie-settings>Preferencias de cookies</button>
-        <button type="button" data-open="dlgLogin" data-admin="1">Acceso administrativo</button>
-      </div>
+      <nav class="ft-cols" aria-label="Pie de página">
+        <div class="ft-col"><h4>Clientes</h4>
+          <button type="button" data-open="dlgOrder">Pedir algo</button>
+          <a href="#inicio">Locales en Camaná</a>
+          <a href="#como">Cómo funciona</a>
+          <a href="#faq">Preguntas frecuentes</a></div>
+        <div class="ft-col"><h4>Repartidores</h4>
+          <button type="button" data-open="dlgCourier">Postular</button>
+          <a href="#repartidores">Requisitos</a>
+          <a href="#apps">App Rapidin Repartidor</a></div>
+        <div class="ft-col"><h4>Negocios</h4>
+          <button type="button" data-open="dlgBiz">Registrar mi negocio</button>
+          <button type="button" data-open="dlgNeg">Panel de negocio</button>
+          <a href="#negocios">Cómo funciona</a></div>
+        <div class="ft-col"><h4>Legal</h4>
+          <button type="button" data-open="dlgLegal" data-legal="terminos">Términos y condiciones</button>
+          <button type="button" data-open="dlgLegal" data-legal="privacidad">Política de privacidad</button>
+          <button type="button" data-cookie-settings>Preferencias de cookies</button>
+          <a href="#contacto">Contacto</a></div>
+      </nav>
     </div>
-    <div class="foot-bottom">
-      <span>© 2026 RAPIDIN · Camaná, Arequipa, Perú</span>
-      <span>Delivery por ofertas en Camaná</span>
+    <div class="ft-mid">
+      <div class="ft-pay"><span>Pagas con</span>
+        <img src="assets/yape.png" alt="Yape" width="28" height="28"><img src="assets/plin.png" alt="Plin" width="28" height="28"><img src="assets/lemon.png" alt="Lemon" width="28" height="28"><span class="ft-cash">Efectivo</span>
+      </div>
+      <div class="ft-stores"><span class="store-b sm"><span><small>Próximamente</small>Google Play</span></span><span class="store-b sm"><span><small>Próximamente</small>App Store</span></span></div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 RAPIDIN. Todos los derechos reservados.</span>
+      <span>Hecho en Camaná · <button type="button" data-open="dlgLogin" data-admin="1">Acceso administrativo</button></span>
     </div>
   </div>
 </footer>
