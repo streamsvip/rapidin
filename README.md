@@ -41,6 +41,27 @@ También puedes **crear una cuenta nueva**: el código de verificación del SMS 
 - Los repartidores ven los productos y el precio del local **fijo**; solo ofertan su **tarifa de envío**. El cliente compara y elige.
 - Los precios se toman siempre del catálogo en el servidor, nunca de lo que envía el navegador.
 
+### Registro de negocios
+
+- En el inicio hay un botón **«¿Tienes un negocio en Camaná?»**, una sección **Para negocios** y enlaces en el menú, el contacto y el pie.
+- El dueño llena nombre, rubro, responsable, celular, dirección, horario, **logo y portada** (opcionales) y marca la ubicación. No necesita cuenta.
+- La solicitud llega al **panel administrativo → Negocios nuevos** (con contador y aviso en la campana) y el negocio puede enviar el aviso por **WhatsApp al 916 252 754** con un mensaje ya escrito que incluye el enlace de Google Maps del local. El número se cambia en `web/js/config.js` (`adminWhatsapp`).
+- Al pulsar **Revisar y aprobar**, se abre el formulario del establecimiento con todos los datos, imágenes y ubicación precargados.
+- En producción el aviso por WhatsApp al administrador lo envía una Cloud Function (WhatsApp Business Cloud API), sin depender del usuario.
+
+### Ubicación de locales
+
+Al registrar o editar un local (admin, guía de repartidores y formulario público) hay cuatro formas de marcar la ubicación:
+1. **Escribir la dirección**: con Google Maps activo, la busca con la Geocoding API dentro de Camaná y muestra opciones si hay varias. Sin API key, abre Google Maps con esa dirección para copiar el enlace.
+2. **Usar mi ubicación** (GPS del celular), ideal estando en el local.
+3. **Pegar un enlace largo o coordenadas** copiadas de Google Maps.
+4. **Tocar el mapa** para afinar el punto exacto.
+Siempre aparece «Confirmar en Google Maps ↗» para verificar el punto.
+
+### Logo y portada
+
+Cada establecimiento puede tener **logo** (cuadrado, se recorta a 256 px) y **portada** (horizontal, 960 × 480 px). Se muestran en el Market del inicio, en el Market del cliente, en la página del local y en el panel. En la demo se guardan reducidas en el navegador; en producción se suben a Firebase Storage.
+
 ### Guía de precios para repartidores
 
 Es distinta del Market y el cliente no la ve. Sirve para cotizar pedidos de **compra libre**:
@@ -72,6 +93,8 @@ web/
 ├── js/auth.js            Ingreso, registro y verificación del celular
 ├── js/config.js          Configuración pública: API key de Google Maps, Map ID, zona
 ├── js/map.js             Mapas: Google Maps si hay API key; si no, mapa referencial
+├── js/location.js        Campo de ubicación: dirección escrita, GPS, enlace de Google Maps o tocar el mapa
+├── js/business.js        Formulario público «Registra tu negocio» y aviso por WhatsApp
 ├── js/ui.js              Utilidades de interfaz
 ├── js/panels/            cliente.js, repartidor.js, admin.js, common.js
 ├── js/demo/store.js      Datos de demostración (se reemplaza por Firestore)
@@ -96,11 +119,12 @@ La web ya está preparada: si `web/js/config.js` tiene una API key, usa Google M
 2. **APIs y servicios → Biblioteca**, habilita:
    - **Maps JavaScript API** (web).
    - **Maps SDK for Android** y **Maps SDK for iOS** (cuando hagamos las apps).
-   - **Places API (New)** (más adelante, para buscar direcciones escribiendo).
+   - **Geocoding API** (para buscar la dirección escrita de un local y ubicarla en el mapa).
+   - **Places API (New)** (más adelante, para sugerencias mientras se escribe).
    - **Routes API** (solo la usarán las Cloud Functions para calcular la ruta una vez por pedido).
 3. **APIs y servicios → Credenciales → Crear credenciales → Clave de API**. Edítala:
    - **Restricción de aplicación: Sitios web**, agrega `https://streamsvip.github.io/*` y `http://localhost:*/*` (luego tu dominio).
-   - **Restricción de API:** solo *Maps JavaScript API* (y *Places API (New)* cuando la usemos).
+   - **Restricción de API:** solo *Maps JavaScript API* y *Geocoding API* (y *Places API (New)* cuando la usemos).
 4. **Google Maps Platform → Administración de mapas → Crear ID de mapa** (tipo JavaScript, vectorial). En **Estilos de mapa** crea un estilo con los colores de RAPIDIN y asócialo a ese ID.
 5. **Cuotas:** en *Maps JavaScript API → Cuotas*, pon un límite diario de cargas de mapa (por ejemplo 300 al día) para no salir del uso gratuito mientras pruebas.
 6. Pega la key y el Map ID en `web/js/config.js`, sube el cambio a GitHub y listo.
