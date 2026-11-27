@@ -20,6 +20,7 @@
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v10h16V10M3 10l2-6h14l2 6H3Z"/><path d="M9 20v-5h6v5"/></g></symbol>
   <symbol id="i-moto" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="16.5" r="3"/><circle cx="18.5" cy="16.5" r="3"/><path d="M8.5 16.5h5l3-6h-4M14 6h3l1.5 4.5M5.5 16.5l3-5h4"/></g></symbol>
 </svg>
 
@@ -36,6 +37,7 @@
       <a href="#market">Market</a>
       <a href="#categorias">Categorías</a>
       <a href="#repartidores">Repartidores</a>
+      <a href="#negocios">Negocios</a>
       <a href="#faq">Preguntas</a>
     </nav>
     <div class="nav-actions">
@@ -59,6 +61,7 @@
         <button class="btn" type="button" data-open="dlgOrder">Solicitar pedido <svg><use href="#i-arrow"/></svg></button>
         <button class="btn ghost" type="button" data-open="dlgCourier"><svg><use href="#i-moto"/></svg> Trabaja con RAPIDIN</button>
       </div>
+      <button class="hero-biz" type="button" data-open="dlgBiz"><svg><use href="#i-store"/></svg><span><b>¿Tienes un negocio en Camaná?</b> Regístralo y vende con RAPIDIN</span><svg class="arr"><use href="#i-arrow"/></svg></button>
       <div class="hero-pay"><span>Paga con <b>efectivo</b>, <b>Yape</b>, <b>Plin</b>, <b>Lemon</b> o <b>saldo</b></span></div>
     </div>
   </div>
@@ -263,6 +266,32 @@
   </div>
 </section>
 
+<section class="biz-sec" id="negocios">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Para negocios</span>
+      <h2 style="margin-top:16px">Tu local en el celular de todo Camaná.</h2>
+      <p class="lead" style="margin-top:18px">Registra tu negocio en dos minutos. Aparece en el Market con tu logo, tu portada y tus precios, y los repartidores de RAPIDIN llevan tus pedidos.</p>
+      <div class="benefits">
+        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Sin repartidores propios</b><p>Los repartidores verificados de RAPIDIN recogen en tu local y entregan.</p></div></div>
+        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Tus precios, tu catálogo</b><p>El cliente compra con el precio de tu local. Tú decides qué publicar y cuándo está agotado.</p></div></div>
+        <div class="benefit"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>Solo cuando abres</b><p>Pones tus días y horario; fuera de ese horario nadie puede pedirte.</p></div></div>
+      </div>
+      <div style="margin-top:28px"><button class="btn" type="button" data-open="dlgBiz"><svg><use href="#i-store"/></svg> Registrar mi negocio</button></div>
+    </div>
+    <div class="calc join-card biz-steps">
+      <h3>Así te sumas</h3>
+      <p class="hint">Sin trámites largos. Te acompañamos por WhatsApp.</p>
+      <ol class="join-steps">
+        <li><b>Envía tus datos</b><span>Nombre, rubro, dirección y, si quieres, tu logo y una foto de portada.</span></li>
+        <li><b>Marca tu ubicación</b><span>Escribe la dirección y la confirmamos con Google Maps, o usa el GPS estando en tu local.</span></li>
+        <li><b>Te escribimos</b><span>Revisamos tu solicitud y te contactamos por WhatsApp.</span></li>
+        <li><b>Publicamos tu local</b><span>Cargamos tu catálogo y empiezas a recibir pedidos.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
 <section id="pagos">
   <div class="wrap">
     <div class="sec-head">
@@ -335,6 +364,7 @@
       <details><summary>¿Puedo pedir algo sin elegir la tienda?</summary><p>Sí, con la compra libre. Describes lo que necesitas y el repartidor decide dónde comprarlo. Si cambia un producto o el precio, tiene que pedirte autorización.</p></details>
       <details><summary>¿Cuándo veo el Yape o Plin del repartidor?</summary><p>Solo después de aceptar su oferta, y solo para ese pedido. Nadie más ve esos datos.</p></details>
       <details><summary>¿Cómo me vuelvo repartidor?</summary><p>Llena la postulación con tus datos básicos y sube tu DNI (y tu licencia si usas moto). Un administrador la revisa y te avisa. Mientras esté pendiente no puedes recibir pedidos.</p></details>
+      <details><summary>¿Cómo registro mi negocio?</summary><p>Toca «Registrar mi negocio», completa los datos, marca la ubicación de tu local y, si quieres, sube tu logo y una foto de portada. Recibimos tu solicitud al instante y te escribimos por WhatsApp para publicarlo.</p></details>
       <details><summary>¿Qué necesito para ser repartidor?</summary><p>Ser mayor de edad, tener tu DNI y un celular. Si repartes en moto o mototaxi, también tu licencia. Las condiciones para repartidores las ves en tu panel al postular.</p></details>
     </div>
   </div>
@@ -347,6 +377,7 @@
         <span class="eyebrow">Contacto</span>
         <h2 style="margin-top:16px">¿Tienes un negocio en Camaná?</h2>
         <p class="lead" style="margin-top:18px">Escríbenos para sumar tu establecimiento, resolver dudas o reportar un problema con un pedido.</p>
+        <button class="btn teal" type="button" data-open="dlgBiz" style="margin-top:22px"><svg><use href="#i-store"/></svg> Registrar mi negocio</button>
         <div class="contact-lines">
           <div><span>Correo:</span> hola@rapidin.pe <span>(provisional)</span></div>
           <div><span>Zona:</span> Camaná, Arequipa, Perú</div>
@@ -390,6 +421,11 @@
         <button type="button" data-open="dlgCourier">Postular</button>
         <a href="#repartidores">Requisitos</a>
         <a href="#apps">App Rapidin Repartidor</a>
+      </div>
+      <div class="foot-col">
+        <h4>Negocios</h4>
+        <button type="button" data-open="dlgBiz">Registrar mi negocio</button>
+        <a href="#market">Market RAPIDIN</a>
       </div>
       <div class="foot-col">
         <h4>RAPIDIN</h4>
