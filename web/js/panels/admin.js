@@ -246,7 +246,7 @@ const usuarios = {
 };
 
 /* ---------- Recargas y retiros ---------- */
-const recargas = moneyView("Recargas", "topups", "tp", (db, t) => `${sol(t.monto)} · ${esc(t.metodo)}<small>Operación ${esc(t.operacion)}</small>`, "Verificar", "Confirma que el dinero llegó a la cuenta de RAPIDIN con ese código de operación.", (ctx, id, ok) => api.confirmTopup(ctx.uid, id, ok));
+const recargas = moneyView("Recargas", "topups", "tp", (db, t) => `${sol(t.monto)} · ${esc(t.metodo)}<small>${t.pagador ? `Pagó: ${esc(t.pagador)}` : `Operación ${esc(t.operacion || "")}`}</small>`, "Confirmar", "Confirma solo cuando el pago de esa persona ya llegó a la cuenta de RAPIDIN.", (ctx, id, ok) => api.confirmTopup(ctx.uid, id, ok));
 const retiros = moneyView("Retiros", "withdrawals", "wd", (db, t) => `${sol(t.monto)}<small>A ${esc(t.cuenta)} · ganancias ${sol(db.wallets[t.uid]?.ganancias || 0)}</small>`, "Marcar como pagado", "Envía el dinero a la cuenta indicada y luego márcalo como pagado.", (ctx, id, ok) => api.approveWithdrawal(ctx.uid, id, ok));
 function moneyView(title, col, key, line, okLabel, help, fn) {
   return {
@@ -257,9 +257,9 @@ function moneyView(title, col, key, line, okLabel, help, fn) {
         if (!list.length) return empty(`Sin ${title.toLowerCase()}`, "Aparecerán aquí cuando los usuarios las soliciten.");
         const pend = list.filter(t => t.estado === "pendiente").length;
         return `<p class="hint-s" style="margin-bottom:14px">${esc(help)} ${pend ? `<b>${pend} pendiente${pend > 1 ? "s" : ""}.</b>` : ""}</p>
-        <section class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Usuario</th><th>Detalle</th><th>Solicitado</th><th>Estado</th><th></th></tr></thead><tbody>
+        <section class="card"><div class="table-wrap"><table class="table money-table"><thead><tr><th>Usuario</th><th>Detalle</th><th>Solicitado</th><th>Estado</th><th></th></tr></thead><tbody>
         ${list.map(t => `<tr><td>${userName(db, t.uid)}<small>${db.users[t.uid]?.roles.repartidor === "aprobado" ? "Repartidor" : "Cliente"}</small></td><td>${line(db, t)}</td><td>${ago(t.creado)}</td>
-          <td><span class="chip ${t.estado === "pendiente" ? "warn" : ["confirmada", "pagado"].includes(t.estado) ? "ok" : "bad"}">${{ pendiente: "Pendiente", confirmada: "Verificada", rechazada: "Rechazada", pagado: "Pagado", rechazado: "Rechazado" }[t.estado]}</span></td>
+          <td><span class="chip ${t.estado === "pendiente" ? "warn" : ["confirmada", "pagado"].includes(t.estado) ? "ok" : "bad"}">${{ pendiente: "Pendiente", confirmada: "Confirmada", rechazada: "Rechazada", pagado: "Pagado", rechazado: "Rechazado" }[t.estado]}</span></td>
           <td class="t-actions">${t.estado === "pendiente" ? `<button class="btn small ghost-dark" type="button" data-act="no" data-id="${t.id}">Rechazar</button> <button class="btn small teal" type="button" data-act="yes" data-id="${t.id}">${okLabel}</button>` : ""}</td></tr>`).join("")}
         </tbody></table></div></section>`;
       });
