@@ -1379,3 +1379,9 @@ form[data-mform=t] .topup-note{margin:8px 2px 0;font-size:.82rem}
   .money-table td.t-actions:empty{display:none}
   .money-table td.t-actions .btn{flex:1;justify-content:center}
 }
+
+/* Página del local (Market del cliente): barra de secciones + título de sección = un solo bloque fijo, sin rendijas */
+.store-body .hs.sec-nav{top:var(--tb-h,66px);height:56px;box-sizing:border-box;display:flex;align-items:center;padding-top:0;padding-bottom:0;margin-bottom:0;z-index:6}
+.store-body .hs.sec-nav .hs-track{width:100%;padding:0}
+.store-body section[id^="sec-"]{scroll-margin-top:calc(var(--tb-h,66px) + 56px)}
+.store-body section[id^="sec-"] > .card-t{position:sticky;top:calc(var(--tb-h,66px) + 56px);z-index:5;margin:-22px -22px 8px;padding:16px 22px 12px;background:var(--card);border-radius:var(--r) var(--r) 0 0;box-shadow:0 1px 0 var(--linea),0 12px 16px -14px rgba(0,0,0,.35)}
