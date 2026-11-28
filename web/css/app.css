@@ -1308,3 +1308,20 @@ input[type=file].in::file-selector-button{border:0;border-radius:10px;padding:8p
 .cs-sec h3{padding-top:6px}
 .hs.st-nav{box-shadow:none}
 .st-sec h3{padding-top:6px;box-shadow:0 1px 0 rgba(16,28,44,.08),0 10px 14px -12px rgba(16,28,44,.25)}
+
+/* Local elegido en «Pedir»: el nombre largo ocupa sus líneas sin montarse sobre el resto */
+.ss-t{grid-template-columns:minmax(0,1fr)}
+.sel-store .sr-top{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.sel-store .sr-top b{display:block;flex:1 1 100%;white-space:normal;overflow:visible;-webkit-line-clamp:unset;line-height:1.25;overflow-wrap:break-word;font-size:1rem}
+.sel-store .sr-top .rt{flex:none}
+.ss-t small{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+/* Locales cerrados en la lista: visibles pero no elegibles */
+.shop-row:disabled{cursor:not-allowed}
+.shop-row:disabled .sr-radio{opacity:.35}
+#shopList [data-live=shops]{display:contents}
+.ss-cat small{line-height:1.3}
+.sr-badge-off{flex:none;align-self:center;padding:4px 9px;border-radius:999px;background:var(--warn-bg);color:var(--warn);font:700 .7rem var(--f-body);letter-spacing:.02em}
+.shop-row.off{opacity:.7}
+.shop-row.off .cat-badge,.shop-row.off .sl-logo,.shop-row.off img{filter:grayscale(.6)}
+.sr-main small.sr-closed{color:var(--warn)}
+.shop-row.off .sr-main small:last-child:not(.sr-closed){color:var(--tinta-suave)}
