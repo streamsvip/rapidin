@@ -1325,3 +1325,18 @@ input[type=file].in::file-selector-button{border:0;border-radius:10px;padding:8p
 .shop-row.off .cat-badge,.shop-row.off .sl-logo,.shop-row.off img{filter:grayscale(.6)}
 .sr-main small.sr-closed{color:var(--warn)}
 .shop-row.off .sr-main small:last-child:not(.sr-closed){color:var(--tinta-suave)}
+
+/* Cabecera de la web pública en celular: logo, Camaná, cuenta, carrito y menú en una sola fila (con y sin sesión) */
+.nav-login.logged{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+@media (max-width:760px){
+  .shop-nav .nav-actions{flex-wrap:nowrap;align-items:center;gap:8px}
+  .shop-nav .nav-login{white-space:nowrap}
+  .nav-login.logged{padding:4px;border-radius:12px;background:rgba(255,255,255,.08)}
+  .nav-login.logged .acc-t{display:none}
+  .nav-login.logged .acc-dot{width:36px;height:36px;border-radius:10px;font-size:.8rem}
+}
+@media (max-width:360px){
+  .shop-nav .sn-row{gap:8px}
+  .sn-city{padding:6px 8px 6px 6px}
+}
+@media (max-width:340px){ .sn-city b{display:none} .sn-city{padding:8px} .shop-nav .nav-login{padding:8px 6px} }
