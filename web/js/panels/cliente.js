@@ -398,7 +398,7 @@ const nuevo = {
             ${(() => { const cnt = {}; Object.values(ctx.db.establishments).filter(e => e.activo).forEach(e => (e.etiquetas || []).forEach(t => (cnt[t] = (cnt[t] || 0) + 1))); const items = ESPECIALIDADES.filter(([n]) => cnt[n]).map(([n, ic]) => [n, ic]); return items.length ? catBar(items, draft.shopCat || "", "shopCat", { all: "Todos", label: "Categorías de locales" }) : ""; })()}
             <input class="in sm" type="search" id="shopQ" value="${esc(draft.shopq || "")}" data-input="shopq" placeholder="Busca un local: pollería, chifa, farmacia…" aria-label="Buscar local">
           </div>
-          <div class="shop-list" id="shopList" role="radiogroup" aria-label="Local">${shopListHtml(ctx)}</div>
+          <div class="shop-list" id="shopList" role="radiogroup" aria-label="Local">${ctx.live("shops", () => shopListHtml(ctx))}</div>
           <div id="otraBox" ${draft.tiendaId === "otra" ? "" : "hidden"}>
             <div class="two"><input class="in sm" id="nOtraN" value="${esc(draft.otra.nombre)}" data-input="otra" placeholder="Nombre del local" aria-label="Nombre del local">
             <input class="in sm" id="nOtraD" value="${esc(draft.otra.direccion)}" data-input="otra" placeholder="Dirección o referencia" aria-label="Dirección del local"></div>
@@ -445,16 +445,18 @@ const nuevo = {
     ...delivChanges,
     mod(el, ctx) { draft.modalidad = el.value; $("#tiendaBox").hidden = el.value !== "tienda"; composer(ctx); requestAnimationFrame(() => initHScroll()); if (el.value !== "tienda") setPick("entrega"); currentPicker?.redraw(); barRefresh(ctx); },
   },
-  inputs: { ...delivInputs, desc(el) { draft.descripcion = el.value; }, nota(el) { draft.nota = el.value; }, shopq(el, ctx) { draft.shopq = el.value; draft.shopAll = false; $("#shopList").innerHTML = shopListHtml(ctx); }, otra(el, ctx) { draft.otra.nombre = $("#nOtraN").value; draft.otra.direccion = $("#nOtraD").value; barRefresh(ctx); } },
+  inputs: { ...delivInputs, desc(el) { draft.descripcion = el.value; }, nota(el) { draft.nota = el.value; }, shopq(el, ctx) { draft.shopq = el.value; draft.shopAll = false; paintShops(ctx); }, otra(el, ctx) { draft.otra.nombre = $("#nOtraN").value; draft.otra.direccion = $("#nOtraD").value; barRefresh(ctx); } },
   actions: {
     ...delivActions,
     sug(b) { const t = $("#nDesc"), v = SUGS[+b.dataset.i][1]; t.value = t.value.trim() ? `${t.value.trim()}\n${v}` : v; draft.descripcion = t.value; t.focus(); const k = v.indexOf("  "); const pos = t.value.length - (k >= 0 ? v.length - k - 1 : 0); t.setSelectionRange(pos, pos); },
-    shopAll(b, ctx) { draft.shopAll = true; $("#shopList").innerHTML = shopListHtml(ctx); },
-    shopCat(b, ctx) { draft.shopCat = b.dataset.c; draft.shopAll = false; b.closest(".hs-track").querySelectorAll(".cat-chip").forEach(x => x.setAttribute("aria-pressed", String(x === b))); $("#shopList").innerHTML = shopListHtml(ctx); },
-    shopChange(b, ctx) { draft.tiendaId = ""; $("#shopList").innerHTML = shopListHtml(ctx); $("#otraBox").hidden = true; composer(ctx); requestAnimationFrame(() => initHScroll()); barRefresh(ctx); },
+    shopAll(b, ctx) { draft.shopAll = true; paintShops(ctx); },
+    shopCat(b, ctx) { draft.shopCat = b.dataset.c; draft.shopAll = false; b.closest(".hs-track").querySelectorAll(".cat-chip").forEach(x => x.setAttribute("aria-pressed", String(x === b))); paintShops(ctx); },
+    shopChange(b, ctx) { draft.tiendaId = ""; paintShops(ctx); $("#otraBox").hidden = true; composer(ctx); requestAnimationFrame(() => initHScroll()); barRefresh(ctx); },
     shop(b, ctx) {
+      const est = ctx.db.establishments[b.dataset.id];
+      if (est && !storeOpen(est)) return toast(`${est.nombre} está cerrado ahora (${statusLabel(est)}). Podrás pedir dentro de su horario.`, "warn");
       draft.tiendaId = b.dataset.id;
-      $("#shopList").innerHTML = shopListHtml(ctx); composer(ctx);
+      paintShops(ctx); composer(ctx);
       if (ctx.db.establishments[draft.tiendaId]?.tiendaVirtual) setTimeout(() => openCatalog(ctx), 120);
       $("#otraBox").hidden = draft.tiendaId !== "otra";
       if (draft.tiendaId === "otra") { if (!draft.otra.pos) setPick("tienda"); $("#nOtraN").focus(); } else setPick("entrega");
@@ -464,7 +466,7 @@ const nuevo = {
     goStore(b, ctx) { ctx.go("#cliente-tienda", { store: b.dataset.id }); },
     catOpen(b, ctx) { openCatalog(ctx); },
     catClose(b, ctx) { closeCatalog(ctx); },
-    catDone(b, ctx) { closeCatalog(ctx); $("#shopList").innerHTML = shopListHtml(ctx); $("#itemsBox")?.scrollIntoView({ behavior: "smooth", block: "center" }); },
+    catDone(b, ctx) { closeCatalog(ctx); paintShops(ctx); $("#itemsBox")?.scrollIntoView({ behavior: "smooth", block: "center" }); },
     csJump(b) { const s = document.getElementById(`cs-${b.dataset.s}`), body = $("#csBody"); if (s && body) body.scrollTo({ top: s.offsetTop - body.offsetTop - 8, behavior: "smooth" }); },
     add(b, ctx) {
       const pid = b.dataset.id, sid = b.dataset.s;
@@ -596,6 +598,8 @@ function refreshPedirCart(ctx) {
 }
 document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#catSheet")) $("#catSheet .cs-x")?.click(); });
 
+/** Redibuja la lista de locales (también se actualiza sola cuando un local abre o cierra). */
+function paintShops(ctx) { const el = $("#shopList [data-live=shops]") || $("#shopList"); if (!el) return; const h = shopListHtml(ctx); el.innerHTML = h; el._html = h; }
 /** Lista vertical de locales para «En un local»: abiertos y mejor calificados primero, con buscador. */
 function shopListHtml(ctx) {
   const db = ctx.db, q = norm((draft.shopq || "").trim());
@@ -604,14 +608,16 @@ function shopListHtml(ctx) {
   list.sort((a, b) => (b.id === draft.tiendaId) - (a.id === draft.tiendaId) || storeOpen(b) - storeOpen(a) || (b.rating || 0) - (a.rating || 0));
   const max = draft.shopAll || q ? 99 : 5, more = list.length - max;
   const row = e => { const o = storeOpen(e), sel = draft.tiendaId === e.id;
-    return `<button type="button" class="shop-row${sel ? " sel" : ""}${o ? "" : " off"}" data-act="shop" data-id="${e.id}" role="radio" aria-checked="${sel}">
-      ${storeLogo(e)}<span class="sr-main"><span class="sr-top"><b>${esc(e.nombre)}</b>${ratingTag(e)}</span><small>${tagsLine(e)}</small><small class="${o ? "pos" : ""}">${esc(statusLabel(e))}${e.tiendaVirtual ? " · Tiene catálogo" : ""}</small></span><span class="sr-radio" aria-hidden="true"></span></button>`; };
+    return `<button type="button" class="shop-row${sel ? " sel" : ""}${o ? "" : " off"}" data-act="shop" data-id="${e.id}" role="radio" aria-checked="${sel}"${o ? "" : ` disabled aria-disabled="true" title="Cerrado ahora: podrás elegirlo dentro de su horario"`}>
+      ${storeLogo(e)}<span class="sr-main"><span class="sr-top"><b>${esc(e.nombre)}</b>${ratingTag(e)}</span><small class="${o ? "pos" : "sr-closed"}">${esc(statusLabel(e))}</small>${e.tiendaVirtual ? `<small>Tiene catálogo</small>` : ""}</span>${o ? `<span class="sr-radio" aria-hidden="true"></span>` : `<span class="sr-badge-off">Cerrado</span>`}</button>`; };
+  // Un local cerrado no se puede elegir: si estaba elegido y cerró, se vuelve a la lista.
+  if (db.establishments[draft.tiendaId] && !storeOpen(db.establishments[draft.tiendaId])) draft.tiendaId = "";
   const sel = db.establishments[draft.tiendaId];
   const find = $("#shopFind"); if (find) find.hidden = !!sel;
   if (sel) {
     const o = storeOpen(sel);
     return `<div class="sel-store">
-      <div class="ss-top">${storeLogo(sel, "lg")}<div class="ss-t"><span class="sr-top"><b>${esc(sel.nombre)}</b>${ratingTag(sel)}</span><small>${tagsLine(sel)}</small><small class="${o ? "pos" : "warn-t"}">${esc(statusLabel(sel))}${o ? "" : ` · ${esc(hoursLabel(sel))}`}</small></div>
+      <div class="ss-top">${storeLogo(sel, "lg")}<div class="ss-t"><span class="sr-top"><b>${esc(sel.nombre)}</b>${ratingTag(sel)}</span><small class="${o ? "pos" : "warn-t"}">${esc(statusLabel(sel))}${o ? "" : ` · ${esc(hoursLabel(sel))}`}</small></div>
         <button type="button" class="link ss-change" data-act="shopChange">Cambiar</button></div>
       ${sel.tiendaVirtual ? `<button type="button" class="btn ss-cat" data-act="catOpen"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 12H6.2L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span><b>${cart.tiendaId === sel.id && cartCount() ? "Agregar más productos" : "Ver catálogo y elegir"}</b><small>Precios del local · los repartidores ofertan solo el envío</small></span><svg class="ic arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>` : ""}
     </div>`;
