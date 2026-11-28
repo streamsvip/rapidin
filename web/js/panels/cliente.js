@@ -232,10 +232,17 @@ const tienda = {
     const prods = Object.values(db.products).filter(p => p.tiendaId === e.id).sort((a, b) => a.orden - b.orden);
     const secciones = [...new Set(prods.map(p => p.seccion))];
     return `<a class="back" href="#cliente-market">← Market</a>
-    <section class="store-head${e.portada ? " photo" : ""}" style="${coverStyle(e)}">
-      ${e.logo ? `<span class="sh-ic logo"><img src="${e.logo}" alt="Logo de ${esc(e.nombre)}"></span>` : `<span class="sh-ic">${(e.etiquetas || []).length ? `<span class="sh-emo">${espIcon(e.etiquetas[0])}</span>` : catIcon(e.categoria, "xl")}</span>`}
-      <div class="sh-main"><span class="sh-badges"><span class="sc-status ${open ? "on" : ""}">${esc(statusLabel(e))}</span>${ratingTag(e)}</span><h2>${esc(e.nombre)}</h2><p>${esc(e.descripcion || e.categoria)}</p>
-        <div class="sh-meta">${(e.etiquetas || []).length ? `<span>${tagsLine(e)}</span>` : ""}<span>${esc(e.direccion)}</span><span>${esc(hoursLabel(e))}</span>${e.tiempoPrep ? `<span>Preparación ~${e.tiempoPrep} min</span>` : ""}</div></div>
+    <section class="store-head sh-pro${e.portada ? " photo" : ""}" style="${coverStyle(e)}">
+      <div class="sh-top">
+        ${e.logo ? `<span class="sh-ic logo"><img src="${e.logo}" alt="Logo de ${esc(e.nombre)}"></span>` : `<span class="sh-ic">${(e.etiquetas || []).length ? `<span class="sh-emo">${espIcon(e.etiquetas[0])}</span>` : catIcon(e.categoria, "xl")}</span>`}
+        <div class="sh-id"><span class="sh-badges"><span class="sc-status ${open ? "on" : ""}">${esc(statusLabel(e))}</span>${ratingTag(e)}</span><h2>${esc(e.nombre)}</h2></div>
+      </div>
+      ${e.descripcion ? `<p class="sh-desc">${esc(e.descripcion)}</p>` : `<p class="sh-desc">${esc(e.categoria)}</p>`}
+      <div class="sh-info">
+        <div class="shi shi-wide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><small>Ubicación</small><b>${esc(e.direccion)}</b></span></div>
+        <div class="shi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><small>Horario</small><b>${esc(hoursLabel(e))}</b></span></div>
+        ${e.tiempoPrep ? `<div class="shi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-14 0Z"/><path d="M9 4c0 1.5 1 1.5 1 3M13 4c0 1.5 1 1.5 1 3"/></svg><span><small>Preparación</small><b>~${e.tiempoPrep} min</b></span></div>` : ""}
+      </div>
     </section>
     ${open ? "" : `<div class="banner warn">Este local está cerrado ahora. Puedes ver el catálogo, pero solo podrás pedir dentro de su horario (${esc(hoursLabel(e))}).</div>`}
     <div class="grid-2 wide-left store-body">
