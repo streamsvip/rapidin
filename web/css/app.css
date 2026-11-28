@@ -1210,3 +1210,22 @@ form[data-form=info] .person small{display:block;margin-top:4px}
 .btn.wa-btn:hover{background:#178a45}
 @media (max-width:640px){ form[data-form=postular] .two{grid-template-columns:1fr} }
 input[type=file].in::file-selector-button{border:0;border-radius:10px;padding:8px 12px;margin-right:10px;background:var(--noche);color:#fff;font:700 .82rem var(--f-body);cursor:pointer}
+
+/* Cabecera de paneles y notificaciones: ajuste profesional en celular */
+.top-title{display:flex;flex-direction:column;justify-content:center;gap:2px}
+.top-crumb{display:block;font:700 .7rem/1.2 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-title h1{line-height:1.15;margin:0}
+.notif-pop{display:flex;flex-direction:column}
+.notif-pop ul{flex:1 1 auto}
+@media (max-width:960px){
+  .notif-pop{position:fixed;top:calc(env(safe-area-inset-top) + 74px);left:12px;right:12px;width:auto;max-width:none;max-height:calc(100dvh - 180px)}
+  .notif-pop ul{max-height:none}
+  .user-pop{position:fixed;top:calc(env(safe-area-inset-top) + 74px);right:12px}
+}
+@media (max-width:640px){
+  .topbar{gap:8px;padding:10px 12px}
+  .main-col .topbar .theme-btn{display:none}
+  .topbar .icon-btn{width:40px;height:40px}
+  .top-crumb{font-size:.62rem;letter-spacing:.07em}
+  .top-title h1{font-size:1.12rem}
+}
