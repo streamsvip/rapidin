@@ -23,7 +23,7 @@ export const CONFIG = {
   // WhatsApp de soporte para clientes y repartidores (sin +51). Cada sección envía un mensaje distinto.
   soporteWhatsapp: "916252754",
 
-  // Número de RAPIDIN que recibe las recargas (Yape, Plin, Lemon y transferencias desde otros bancos al celular).
+  // Número de RAPIDIN que recibe las recargas (solo Yape, Plin o Lemon).
   // titular: nombre que verá la persona al yapear; déjalo vacío para no mostrarlo.
   recarga: { numero: "916252754", titular: "" },
 
