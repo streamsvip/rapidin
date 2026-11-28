@@ -191,6 +191,9 @@ function rebuild() {
   const d = hooks.empty();
   if (q.meta) {
     d.config = { ...d.config, ...(q.meta.config || {}) };
+    // Saldo RAPIDIN y retiros vienen activos por diseño. Si la configuración guardada es anterior (sin cfgSaldo 2),
+    // se respetan como activos para todos aunque el admin aún no haya entrado con esta versión.
+    if (!(d.config.cfgSaldo >= 2)) Object.assign(d.config, { saldoClienteHabilitado: true, retirosHabilitados: true });
     if (q.meta.commissionRules) d.commissionRules = q.meta.commissionRules;
     if (q.meta.zones) d.zones = q.meta.zones;
     d.metaLoaded = true;
