@@ -1,4 +1,5 @@
 /* RAPIDIN · Panel del cliente: Market, pedido libre, pedidos, billetera y perfil */
+import { CONFIG } from "../config.js";
 import * as api from "../core/api.js";
 import { roadKm, MAP, isOpen as storeOpen, statusLabel, hoursLabel, is24h, ESPECIALIDADES, espIcon } from "../core/store.js";
 import { $, $$, esc, sol, fmtPhone, normPhone, waLink, toast, run, modal, closeModal, confirmModal, formData, num, chip, payChip, left, ago, empty, avatar, stars, firstName, payLogo, payTag, fixBrokenLogos, contactButtons, shrinkImage } from "../ui.js";
@@ -871,22 +872,22 @@ const recargaPaso = (m, num) => m === "Otros bancos"
   ? `Desde la app de tu banco o billetera (BCP, Interbank, BBVA, Scotiabank, cajas, Dale…) elige <b>pagar o transferir a un celular</b> y envía al <b>${num}</b>.`
   : `Envía por <b>${m}</b> al <b>${num}</b>.`;
 export function topupModal(ctx, destino = "tu saldo") {
-  const R = CONFIG.recarga || {}; const num = String(R.numero || CONFIG.adminWhatsapp || "").replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3");
+  const R = CONFIG.recarga || {}; const raw = String(R.numero || CONFIG.adminWhatsapp || "").replace(/\D/g, ""); const numTxt = raw.replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3");
   const metodos = api.METODOS_RECARGA;
   modal("Recargar", `<form data-mform="t" novalidate>
     <span class="lbl">¿Con qué vas a recargar?</span>
     <div class="pay-grid four" role="radiogroup" aria-label="Medio de la recarga">${metodos.map((m, i) => `<label class="pay-opt"><input type="radio" name="met" value="${m}" ${i ? "" : "checked"}>${payLogo(m)}<span class="po-t"><b>${m}</b></span></label>`).join("")}</div>
-    <div class="topup-steps"><p class="m-text"><b>1.</b> <span id="tPaso">${recargaPaso(metodos[0], num)}</span>${R.titular ? ` A nombre de <b>${esc(R.titular)}</b>.` : ""}<button type="button" class="link" id="tCopy" style="margin-left:6px">Copiar número</button><br><b>2.</b> Escribe el monto y el código de operación del comprobante. Un administrador lo verifica y se suma a ${destino}.</p></div>
+    <div class="topup-steps"><p class="m-text"><b>1.</b> <span id="tPaso">${recargaPaso(metodos[0], numTxt)}</span>${R.titular ? ` A nombre de <b>${esc(R.titular)}</b>.` : ""}<button type="button" class="link" id="tCopy" style="margin-left:6px">Copiar número</button><br><b>2.</b> Escribe el monto y el código de operación del comprobante. Un administrador lo verifica y se suma a ${destino}.</p></div>
     <div class="f" style="margin-top:14px"><label for="tM">Monto (S/)</label><input class="in" id="tM" name="m" inputmode="decimal" placeholder="20.00"></div>
     <div class="f"><label for="tOp">Código de operación</label><input class="in" id="tOp" name="op" inputmode="numeric" placeholder="Ej.: 73519284"></div>
     <p class="err" id="tErr" role="alert"></p>
     <div class="m-actions"><button class="btn ghost-dark" type="button" data-mclose>Volver</button><button class="btn" type="submit">Enviar para verificar</button></div></form>`,
     { mount: b => {
         fixBrokenLogos(b);
-        b.querySelectorAll("input[name=met]").forEach(r => r.addEventListener("change", () => { $("#tPaso", b).innerHTML = recargaPaso(r.value, num); }));
-        $("#tCopy", b).addEventListener("click", async () => { try { await navigator.clipboard.writeText(String(R.numero || "")); toast("Número copiado."); } catch (e) { toast(`Número: ${num}`); } });
+        b.querySelectorAll("input[name=met]").forEach(r => r.addEventListener("change", () => { $("#tPaso", b).innerHTML = recargaPaso(r.value, numTxt); }));
+        $("#tCopy", b).addEventListener("click", async () => { try { await navigator.clipboard.writeText(raw); toast("Número copiado."); } catch (e) { toast(`Número: ${numTxt}`); } });
       },
-      t: f => { const m = num2(f.m.value); if (!(m > 0)) return ($("#tErr").textContent = "Escribe el monto."); if (run(() => api.requestTopup(ctx.uid, { monto: m, metodo: f.querySelector("input[name=met]:checked").value, operacion: f.op.value.trim() }), "Recarga enviada. Te avisaremos cuando se verifique.")) closeModal(); } });
+      t: f => { const m = num(f.m.value); if (!(m > 0)) return ($("#tErr").textContent = "Escribe el monto."); if (run(() => api.requestTopup(ctx.uid, { monto: m, metodo: f.querySelector("input[name=met]:checked").value, operacion: f.op.value.trim() }), "Recarga enviada. Te avisaremos cuando se verifique.")) closeModal(); } });
 }
 
 /* ---------- Foto de perfil (se recorta cuadrada y se reduce a 320 px) ---------- */
