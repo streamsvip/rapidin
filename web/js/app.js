@@ -159,6 +159,12 @@ function route() {
   enterApp();
   render();
 }
+/** Cada sección se abre desde arriba (también al volver a tocar la misma en el menú). */
+function toTop() { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); const c = $("#appContent"); if (c) c.scrollTop = 0; }
+document.addEventListener("click", e => {
+  const a = e.target.closest?.(".side-link, .bottom-nav a"); if (!a) return;
+  if (a.getAttribute("href") === location.hash) { e.preventDefault(); toTop(); $("#side")?.classList.remove("open"); }
+});
 function enterApp() {
   if (!document.body.classList.contains("in-app")) { document.body.classList.add("in-app"); $("#app").hidden = false; window.scrollTo(0, 0); applyTheme(); }
 }
@@ -179,6 +185,7 @@ function render() {
   if (resolved && resolved !== viewId) { history.replaceState(null, "", `#${panel}-${resolved}`); viewId = resolved; }
   app.panel = P; app.viewId = viewId;
   const V = P.views[viewId];
+  const viewKey = `${P.id}-${viewId}`, newView = app.lastView !== viewKey; app.lastView = viewKey;
   app.live = new Map();
   renderShell(P, viewId, V);
   const content = $("#appContent");
@@ -190,6 +197,7 @@ function render() {
   fixBrokenLogos(content);
   tickCountdowns();
   document.title = `${V.title} · RAPIDIN`;
+  if (newView) toTop();
   setTimeout(fixConfigOnce, 300);
 }
 function renderShell(P, viewId, V) {
