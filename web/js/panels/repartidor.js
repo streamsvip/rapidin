@@ -463,7 +463,7 @@ const billetera = {
       const db = ctx.db, w = db.wallets[ctx.uid];
       const wds = Object.values(db.withdrawals).filter(x => x.uid === ctx.uid).sort((a, b) => b.creado - a.creado);
       const tops = Object.values(db.topups).filter(x => x.uid === ctx.uid).sort((a, b) => b.creado - a.creado);
-      const ST = { pendiente: ["Por revisar", "warn"], pagado: ["Pagado", "ok"], rechazado: ["Rechazado", "bad"], confirmada: ["Verificada", "ok"], rechazada: ["Rechazada", "bad"] };
+      const ST = { pendiente: ["Por revisar", "warn"], pagado: ["Pagado", "ok"], rechazado: ["Rechazado", "bad"], confirmada: ["Confirmada", "ok"], rechazada: ["No llegó", "bad"] };
       return `<div class="kpis">
         <div class="kpi kpi-main"><small>Saldo para comisiones</small><b>${sol(api.walletDisponible(w))}</b><button class="btn small" type="button" data-act="topup">Recargar</button></div>
         <div class="kpi"><small>Reservado en ofertas</small><b>${sol(w.reservado)}</b><span class="muted">Se libera si no te eligen</span></div>
@@ -471,7 +471,7 @@ const billetera = {
       </div>
       <p class="hint-s" style="margin:-6px 0 18px">Las recargas solo sirven para pagar comisiones. Los retiros salen únicamente de tus ganancias (pedidos pagados con saldo RAPIDIN).</p>
       <div class="grid-3">
-        <section class="card"><h2 class="card-t">Recargas</h2>${tops.length ? `<ul class="rows">${tops.map(t => `<li><div><b>${sol(t.monto)} · ${esc(t.metodo)}</b><small>Op. ${esc(t.operacion)} · ${ago(t.creado)}</small></div><span class="chip ${ST[t.estado][1]}">${ST[t.estado][0]}</span></li>`).join("")}</ul>` : `<p class="muted">Sin recargas.</p>`}</section>
+        <section class="card"><h2 class="card-t">Recargas</h2>${tops.length ? `<ul class="rows">${tops.map(t => `<li><div><b>${sol(t.monto)} · ${esc(t.metodo)}</b><small>${t.pagador ? `Pagó: ${esc(t.pagador)}` : `Op. ${esc(t.operacion || "")}`} · ${ago(t.creado)}</small></div><span class="chip ${ST[t.estado][1]}">${ST[t.estado][0]}</span></li>`).join("")}</ul>` : `<p class="muted">Sin recargas.</p>`}</section>
         <section class="card"><h2 class="card-t">Retiros</h2>${wds.length ? `<ul class="rows">${wds.map(t => `<li><div><b>${sol(t.monto)}</b><small>${esc(t.cuenta)} · ${ago(t.creado)}</small></div><span class="chip ${ST[t.estado][1]}">${ST[t.estado][0]}</span></li>`).join("")}</ul>` : `<p class="muted">Sin retiros.</p>`}</section>
         <section class="card"><h2 class="card-t">Movimientos</h2>${ledgerList(db.walletLedger.filter(l => l.uid === ctx.uid).slice(0, 25))}</section>
       </div>`;
