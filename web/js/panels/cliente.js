@@ -853,10 +853,10 @@ const billetera = {
       return `<div class="kpis">
         <div class="kpi kpi-main"><small>Saldo disponible</small><b>${sol(api.saldoDisponible(w))}</b><button class="btn small" type="button" data-act="topup">Recargar saldo</button></div>
         <div class="kpi"><small>Retenido en pedidos</small><b>${sol(w.retenido)}</b><span class="muted">Se descuenta al entregarse</span></div>
-        <div class="kpi"><small>Recargas por verificar</small><b>${tops.filter(t => t.estado === "pendiente").length}</b><span class="muted">Un administrador las revisa</span></div>
+        <div class="kpi"><small>Recargas por confirmar</small><b>${tops.filter(t => t.estado === "pendiente").length}</b><span class="muted">Se suman al confirmarse</span></div>
       </div>
       <div class="grid-2">
-        <section class="card"><h2 class="card-t">Recargas</h2>${tops.length ? `<ul class="rows">${tops.map(t => `<li><div class="row-logo">${payLogo(t.metodo, "sm")}<div><b>${sol(t.monto)} · ${esc(t.metodo)}</b><small>Operación ${esc(t.operacion)} · ${ago(t.creado)}</small></div></div><span class="chip ${t.estado === "confirmada" ? "ok" : t.estado === "rechazada" ? "bad" : "warn"}">${t.estado === "pendiente" ? "Por verificar" : t.estado === "confirmada" ? "Verificada" : "Rechazada"}</span></li>`).join("")}</ul>` : `<p class="muted">Aún no hiciste recargas.</p>`}</section>
+        <section class="card"><h2 class="card-t">Recargas</h2>${tops.length ? `<ul class="rows">${tops.map(t => `<li><div class="row-logo">${payLogo(t.metodo, "sm")}<div><b>${sol(t.monto)} · ${esc(t.metodo)}</b><small>${t.pagador ? `Pagó: ${esc(t.pagador)}` : `Operación ${esc(t.operacion || "")}`} · ${ago(t.creado)}</small></div></div><span class="chip ${t.estado === "confirmada" ? "ok" : t.estado === "rechazada" ? "bad" : "warn"}">${t.estado === "pendiente" ? "Por confirmar" : t.estado === "confirmada" ? "Confirmada" : "No llegó"}</span></li>`).join("")}</ul>` : `<p class="muted">Aún no hiciste recargas.</p>`}</section>
         <section class="card"><h2 class="card-t">Movimientos</h2>${ledgerList(mov)}</section>
       </div>`;
     });
@@ -868,26 +868,32 @@ export function ledgerList(mov) {
   if (!mov.length) return `<p class="muted">Sin movimientos todavía.</p>`;
   return `<ul class="rows">${mov.map(l => `<li><div><b>${L[l.tipo] || l.tipo}</b><small>${esc(l.nota || "")} · ${ago(l.t)}</small></div><b class="${l.monto >= 0 ? "pos" : "neg"}">${l.monto >= 0 ? "+" : "−"}${sol(Math.abs(l.monto)).replace("S/ ", "S/ ")}</b></li>`).join("")}</ul>`;
 }
-const recargaPaso = (m, num) => m === "Otros bancos"
-  ? `Desde la app de tu banco o billetera (BCP, Interbank, BBVA, Scotiabank, cajas, Dale…) elige <b>pagar o transferir a un celular</b> y envía al <b>${num}</b>.`
-  : `Envía por <b>${m}</b> al <b>${num}</b>.`;
 export function topupModal(ctx, destino = "tu saldo") {
   const R = CONFIG.recarga || {}; const raw = String(R.numero || CONFIG.adminWhatsapp || "").replace(/\D/g, ""); const numTxt = raw.replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3");
-  const metodos = api.METODOS_RECARGA;
+  const metodos = api.METODOS_RECARGA, me = ctx.db.users[ctx.uid] || {};
   modal("Recargar", `<form data-mform="t" novalidate>
-    <span class="lbl">¿Con qué vas a recargar?</span>
-    <div class="pay-grid four" role="radiogroup" aria-label="Medio de la recarga">${metodos.map((m, i) => `<label class="pay-opt"><input type="radio" name="met" value="${m}" ${i ? "" : "checked"}>${payLogo(m)}<span class="po-t"><b>${m}</b></span></label>`).join("")}</div>
-    <div class="topup-steps"><p class="m-text"><b>1.</b> <span id="tPaso">${recargaPaso(metodos[0], numTxt)}</span>${R.titular ? ` A nombre de <b>${esc(R.titular)}</b>.` : ""}<button type="button" class="link" id="tCopy" style="margin-left:6px">Copiar número</button><br><b>2.</b> Escribe el monto y el código de operación del comprobante. Un administrador lo verifica y se suma a ${destino}.</p></div>
-    <div class="f" style="margin-top:14px"><label for="tM">Monto (S/)</label><input class="in" id="tM" name="m" inputmode="decimal" placeholder="20.00"></div>
-    <div class="f"><label for="tOp">Código de operación</label><input class="in" id="tOp" name="op" inputmode="numeric" placeholder="Ej.: 73519284"></div>
+    <span class="lbl">¿Con qué pagas?</span>
+    <div class="pay-grid three" role="radiogroup" aria-label="Medio de la recarga">${metodos.map((m, i) => `<label class="pay-opt"><input type="radio" name="met" value="${m}" ${i ? "" : "checked"}>${payLogo(m)}<span class="po-t"><b>${m}</b></span></label>`).join("")}</div>
+    <div class="topup-pay"><span>Envía por <b id="tMet">${metodos[0]}</b> al</span><strong>${numTxt}</strong>${R.titular ? `<small>A nombre de ${esc(R.titular)}</small>` : ""}<button type="button" class="btn small ghost-dark" id="tCopy">Copiar número</button></div>
+    <div class="topup-row">
+      <div class="f"><label for="tM">Monto (S/)</label><input class="in" id="tM" name="m" inputmode="decimal" placeholder="20.00"></div>
+      <div class="f"><label for="tN">Nombre de quien pagó</label><input class="in" id="tN" name="n" autocomplete="name" value="${esc(me.nombre || "")}" maxlength="60"></div>
+    </div>
+    <label class="check topup-ok"><input type="checkbox" name="ok" id="tOk"><span>Ya realicé el pago</span></label>
+    <p class="muted topup-note">Cuando el pago llegue a RAPIDIN, se confirma y se suma a ${destino}.</p>
     <p class="err" id="tErr" role="alert"></p>
-    <div class="m-actions"><button class="btn ghost-dark" type="button" data-mclose>Volver</button><button class="btn" type="submit">Enviar para verificar</button></div></form>`,
+    <div class="m-actions"><button class="btn ghost-dark" type="button" data-mclose>Volver</button><button class="btn" type="submit">Confirmar recarga</button></div></form>`,
     { mount: b => {
         fixBrokenLogos(b);
-        b.querySelectorAll("input[name=met]").forEach(r => r.addEventListener("change", () => { $("#tPaso", b).innerHTML = recargaPaso(r.value, numTxt); }));
+        b.querySelectorAll("input[name=met]").forEach(r => r.addEventListener("change", () => { $("#tMet", b).textContent = r.value; }));
         $("#tCopy", b).addEventListener("click", async () => { try { await navigator.clipboard.writeText(raw); toast("Número copiado."); } catch (e) { toast(`Número: ${numTxt}`); } });
       },
-      t: f => { const m = num(f.m.value); if (!(m > 0)) return ($("#tErr").textContent = "Escribe el monto."); if (run(() => api.requestTopup(ctx.uid, { monto: m, metodo: f.querySelector("input[name=met]:checked").value, operacion: f.op.value.trim() }), "Recarga enviada. Te avisaremos cuando se verifique.")) closeModal(); } });
+      t: f => {
+        const m = num(f.m.value), err = $("#tErr");
+        if (!(m > 0)) return (err.textContent = "Escribe el monto que enviaste.");
+        if (!f.ok.checked) return (err.textContent = "Marca «Ya realicé el pago» después de enviar el dinero.");
+        if (run(() => api.requestTopup(ctx.uid, { monto: m, metodo: f.querySelector("input[name=met]:checked").value, pagador: f.n.value }), "Recarga registrada. Se sumará a tu saldo apenas se confirme el pago.")) closeModal();
+      } });
 }
 
 /* ---------- Foto de perfil (se recorta cuadrada y se reduce a 320 px) ---------- */
