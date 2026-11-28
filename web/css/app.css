@@ -1340,3 +1340,42 @@ input[type=file].in::file-selector-button{border:0;border-radius:10px;padding:8p
   .sn-city{padding:6px 8px 6px 6px}
 }
 @media (max-width:340px){ .sn-city b{display:none} .sn-city{padding:8px} .shop-nav .nav-login{padding:8px 6px} }
+
+/* Ventana «Recargar» (cliente y repartidor): Yape, Plin y Lemon en tres columnas parejas */
+form[data-mform=t] .pay-grid.three{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+form[data-mform=t] .pay-opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;min-width:0;text-align:center}
+form[data-mform=t] .pay-opt .po-t{min-width:0}
+form[data-mform=t] .pay-opt .po-t b{font-size:.88rem;white-space:nowrap}
+form[data-mform=t] .topup-steps{margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--app-bg)}
+form[data-mform=t] .topup-steps .m-text{margin:0;line-height:1.6}
+form[data-mform=t] .m-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:10px}
+form[data-mform=t] .m-actions .btn{width:100%;justify-content:center;white-space:nowrap}
+form[data-mform=t] .topup-steps b{white-space:nowrap}
+form[data-mform=t] .m-actions .btn{padding-left:10px;padding-right:10px;font-size:.92rem}
+form[data-mform=t] .topup-pay{display:grid;justify-items:center;gap:4px;margin-top:12px;padding:14px;border-radius:16px;background:var(--app-bg);text-align:center}
+form[data-mform=t] .topup-pay span{font-size:.88rem;color:var(--tinta-suave)}
+form[data-mform=t] .topup-pay strong{font:900 1.6rem/1.1 var(--f-display);font-stretch:110%;letter-spacing:.02em;color:var(--ink)}
+form[data-mform=t] .topup-pay small{font-size:.8rem;color:var(--tinta-suave)}
+form[data-mform=t] .topup-pay .btn{margin-top:6px}
+form[data-mform=t] .topup-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:10px;margin-top:14px}
+form[data-mform=t] .topup-row .f{margin:0}
+form[data-mform=t] .topup-ok{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--sel-bg);font-weight:700;cursor:pointer}
+form[data-mform=t] .topup-ok input{width:20px;height:20px;accent-color:var(--naranja);margin:0}
+form[data-mform=t] .topup-note{margin:8px 2px 0;font-size:.82rem}
+@media (max-width:420px){ form[data-mform=t] .topup-row{grid-template-columns:1fr} }
+
+/* Recargas y retiros del administrador en celular: tarjetas con los botones a la vista, sin deslizar la tabla */
+@media (max-width:640px){
+  .money-table{min-width:0 !important;width:100%}
+  .money-table thead{display:none}
+  .money-table tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--linea)}
+  .money-table tr:last-child{border-bottom:0}
+  .money-table td{display:block;padding:0 !important;border:0 !important;min-width:0}
+  .money-table td:nth-child(1){grid-column:1;font-weight:700}
+  .money-table td:nth-child(4){grid-column:2;grid-row:1;justify-self:end}
+  .money-table td:nth-child(2){grid-column:1/-1}
+  .money-table td:nth-child(3){grid-column:1/-1;font-size:.8rem;color:var(--tinta-suave)}
+  .money-table td.t-actions{grid-column:1/-1;display:flex;gap:8px}
+  .money-table td.t-actions:empty{display:none}
+  .money-table td.t-actions .btn{flex:1;justify-content:center}
+}
