@@ -399,8 +399,8 @@ function openNotif(id) {
 export function updateLandingNav() {
   const b = $("#navAccount"); if (!b) return;
   const uid = getSessionUid(); const u = uid ? S.load().users[uid] : null;
-  if (u) { b.innerHTML = `<span class="acc-dot">${esc(u.nombre.split(" ").slice(0, 2).map(w => w[0]).join(""))}</span>Mi panel`; b.setAttribute("aria-label", `Abrir el panel de ${u.nombre}`); }
-  else { b.textContent = "Ingresar"; b.removeAttribute("aria-label"); }
+  if (u) { b.innerHTML = `<span class="acc-dot">${esc(u.nombre.split(" ").slice(0, 2).map(w => w[0]).join(""))}</span><span class="acc-t">Mi panel</span>`; b.classList.add("logged"); b.setAttribute("aria-label", `Abrir el panel de ${u.nombre}`); }
+  else { b.textContent = "Ingresar"; b.removeAttribute("aria-label"); b.classList.remove("logged"); }
 }
 
 /* ---------- Inicio ---------- */
