@@ -1277,3 +1277,10 @@ input[type=file].in::file-selector-button{border:0;border-radius:10px;padding:8p
 .sh-id .sc-status{position:static;justify-self:start;inset:auto}
 @media (max-width:640px){ .sh-info{grid-template-columns:minmax(0,1fr) auto} }
 @media (max-width:640px){ .sh-info{grid-template-columns:1fr;gap:6px} .shi{padding:8px 11px} }
+
+/* Grillas de una columna: el contenido largo (filas que se deslizan, nombres largos) nunca ensancha la página */
+.qa,.qa-card,#shopFind,#tiendaBox,.shop-list,.stack,.sr-main,.pr-main,.sc-body{grid-template-columns:minmax(0,1fr)}
+#tiendaBox,.shop-list,.shop-row,.sc-body{min-width:0;max-width:100%}
+.sr-top{align-items:flex-start}
+.sr-top b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.25;overflow-wrap:anywhere}
+.sr-top .rt{margin-top:1px}
