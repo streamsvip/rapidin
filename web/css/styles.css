@@ -969,3 +969,45 @@ main + footer.ft{margin-top:60px}
 @media (max-width:760px){ .pay-ics img{width:30px;height:30px;border-radius:10px} }
 
 .pay-ics.rap img{padding:0;background:#FF5A1F}
+
+/* ---------- Contador − n + en las tarjetas de producto ---------- */
+.pc-ctl{position:absolute;top:8px;right:8px;z-index:2}
+.pc-ctl .pc-add{position:static}
+.pc-step{display:flex;align-items:center;gap:2px;height:38px;padding:3px;border-radius:999px;background:var(--noche);box-shadow:0 10px 18px -10px rgba(16,28,44,.9)}
+@keyframes stepIn{from{transform:scale(.85);opacity:.4}}
+.pc-step button{width:32px;height:32px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:700 1.15rem/1 var(--f-body);cursor:pointer;display:grid;place-items:center}
+.pc-step button:hover{background:var(--naranja)}
+.pc-step b{min-width:22px;text-align:center;color:#fff;font:800 .95rem var(--f-body);font-variant-numeric:tabular-nums}
+.st-ctl{flex:none}
+.qty button:disabled{opacity:.35;cursor:not-allowed}
+.btn.ss-main.danger{background:#D64545;box-shadow:0 12px 22px -14px rgba(214,69,69,.9)}
+.btn.ss-main:disabled{background:#CBD2DC;box-shadow:none}
+@media (max-width:420px){ .pc-step{height:34px} .pc-step button{width:28px;height:28px} }
+
+/* ---------- Cabecera del celular en una sola fila: logo · Camaná · Ingresar · pedido · menú ---------- */
+@media (max-width:860px){
+  .shop-nav .sn-row{gap:8px;padding:10px 0 12px}
+  .shop-nav .logo-img{width:38px;height:38px}
+  .sn-city{padding:6px 10px 6px 7px;gap:5px;border-radius:11px;min-width:0}
+  .sn-city svg{width:18px;height:18px}
+  .sn-city b{font-size:.86rem}
+  .shop-nav .nav-actions{gap:4px;flex:none}
+  .shop-nav .nav-login{padding:8px 8px;font-size:.88rem}
+  .sn-cart{width:42px;height:42px;padding:0;justify-content:center;border-radius:12px}
+  .shop-nav .burger{padding:4px}
+  .shop-nav .burger svg{width:26px;height:26px}
+}
+@media (max-width:360px){ .sn-city b{font-size:.8rem} .shop-nav .nav-login{font-size:.82rem;padding:8px 4px} }
+
+/* ---------- Saludo del inicio (celular) ---------- */
+@media (max-width:760px){
+  .shop-hi{display:flex;flex-direction:column;gap:2px;margin:2px 0 14px}
+  .shop-hi .hi-1{display:inline-flex;align-items:center;gap:6px;font:850 1.5rem/1.1 var(--f-display);font-stretch:110%;color:var(--naranja)}
+  .shop-hi .hi-1 i{font-style:normal;display:inline-block;transform-origin:70% 70%;animation:wave 2.2s ease-in-out 1}
+  .shop-hi b{margin-top:0;font-size:1.5rem}
+}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%,40%{transform:rotate(-8deg)}}
+
+/* ---------- Nota de locales con panel (medios de pago) ---------- */
+.pays-note{position:relative;padding:14px 14px 14px 62px}
+.pays-note .pn-ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:1.25rem;box-shadow:0 6px 14px -8px rgba(16,28,44,.4)}
