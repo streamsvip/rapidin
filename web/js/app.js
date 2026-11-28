@@ -159,6 +159,9 @@ function route() {
   enterApp();
   render();
 }
+/** Altura real de la cabecera del panel: las barras fijas (secciones del local) se pegan justo debajo, sin rendijas. */
+function syncTopbarH() { const t = document.querySelector("#app .topbar"); if (t) document.documentElement.style.setProperty("--tb-h", `${Math.round(t.getBoundingClientRect().height)}px`); }
+addEventListener("resize", () => requestAnimationFrame(syncTopbarH));
 /** Cada sección se abre desde arriba (también al volver a tocar la misma en el menú). */
 function toTop() { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); const c = $("#appContent"); if (c) c.scrollTop = 0; }
 document.addEventListener("click", e => {
@@ -188,6 +191,7 @@ function render() {
   const viewKey = `${P.id}-${viewId}`, newView = app.lastView !== viewKey; app.lastView = viewKey;
   app.live = new Map();
   renderShell(P, viewId, V);
+  syncTopbarH();
   const content = $("#appContent");
   content.innerHTML = V.render(ctx);
   content.dataset.view = `${P.id}-${viewId}`;
