@@ -44,7 +44,7 @@ export const MOTIVOS_REPORTE = {
 };
 export const METODOS_DIRECTOS = ["Yape", "Plin", "Lemon"];
 /** Medios para recargar saldo: los anteriores y transferencias desde la app de otro banco al celular de RAPIDIN. */
-export const METODOS_RECARGA = [...METODOS_DIRECTOS, "Otros bancos"];
+export const METODOS_RECARGA = [...METODOS_DIRECTOS]; // Recargas solo por Yape, Plin o Lemon
 export const MODALIDAD = { libre: "Compra libre", tienda: "Tienda específica", catalogo: "Market" };
 
 /* ---------- Utilidades internas ---------- */
@@ -547,16 +547,17 @@ export function approveOrderChange(actor, orderId, changeId, aprobar) {
   });
 }
 
-export function requestTopup(actor, { monto, metodo, operacion }) {
+export function requestTopup(actor, { monto, metodo, pagador }) {
   tx(db => {
     activeUser(db, actor);
     ok(monto >= 5 && monto <= 1000, "La recarga debe ser entre S/ 5 y S/ 1000.");
     ok(METODOS_RECARGA.includes(metodo), "Elige con qué recargaste.");
-    ok(/^\d{4,12}$/.test(operacion || ""), "Escribe el código de operación (solo números).");
-    ok(!Object.values(db.topups).some(t => t.operacion === operacion && t.estado !== "rechazada"), "Ese código de operación ya fue registrado.");
+    pagador = String(pagador || "").trim().replace(/\s+/g, " ");
+    ok(pagador.length >= 3 && pagador.length <= 60, "Escribe el nombre de quien hizo el pago.");
+    ok(Object.values(db.topups).filter(t => t.uid === actor && t.estado === "pendiente").length < 3, "Ya tienes 3 recargas por confirmar. Espera a que se confirmen.");
     const id = uid("tp");
-    db.topups[id] = { id, uid: actor, monto: r2(monto), metodo, operacion, estado: "pendiente", creado: now() };
-    notify(db, ADMINS, `Nueva recarga por verificar: S/ ${r2(monto).toFixed(2)}.`);
+    db.topups[id] = { id, uid: actor, monto: r2(monto), metodo, pagador, estado: "pendiente", creado: now() };
+    notify(db, ADMINS, `Nueva recarga: S/ ${r2(monto).toFixed(2)} por ${metodo} de ${pagador}. Confírmala cuando te llegue.`);
   });
 }
 export function requestWithdrawal(actor, { monto, cuenta }) {
@@ -804,9 +805,9 @@ export function confirmTopup(actor, id, aprobar) {
       // Repartidor: saldo para comisiones. Cliente: saldo para pagar pedidos. Ninguna recarga es ingreso de RAPIDIN.
       const campo = u.roles.repartidor === "aprobado" ? "recargas" : "saldo";
       w[campo] = r2(w[campo] + t.monto);
-      ledger(db, { uid: t.uid, tipo: "recarga", campo, monto: t.monto, ref: id, key: `topup:${id}`, nota: `Recarga ${t.metodo} verificada` });
+      ledger(db, { uid: t.uid, tipo: "recarga", campo, monto: t.monto, ref: id, key: `topup:${id}`, nota: `Recarga ${t.metodo} confirmada` });
     }
-    notify(db, t.uid, aprobar ? `Tu recarga de S/ ${t.monto.toFixed(2)} fue verificada.` : `Tu recarga de S/ ${t.monto.toFixed(2)} fue rechazada. Revisa el código de operación.`);
+    notify(db, t.uid, aprobar ? `Tu recarga de S/ ${t.monto.toFixed(2)} fue confirmada y ya está en tu saldo.` : `Tu recarga de S/ ${t.monto.toFixed(2)} no se pudo confirmar: el pago no llegó. Escríbenos por WhatsApp si ya lo enviaste.`);
     audit(db, actor, "confirmTopup", `S/ ${t.monto.toFixed(2)} de ${name(db, t.uid)}: ${aprobar ? "confirmada" : "rechazada"}`);
   });
 }
